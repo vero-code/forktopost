@@ -6,11 +6,12 @@ import { motion } from 'motion/react';
 
 interface PostPreviewProps {
   content: string;
+  imageUrl?: string;
   onBack: () => void;
   theme: 'original' | 'tech' | 'forest' | 'sea';
 }
 
-export default function PostPreview({ content, onBack, theme }: PostPreviewProps) {
+export default function PostPreview({ content, imageUrl, onBack, theme }: PostPreviewProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -97,6 +98,29 @@ export default function PostPreview({ content, onBack, theme }: PostPreviewProps
           </button>
         </div>
       </div>
+
+      {imageUrl && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="mb-10 overflow-hidden rounded-xl border border-white/10 shadow-2xl"
+        >
+          <img 
+            src={imageUrl} 
+            alt="Generated Cover" 
+            className="w-full h-auto object-cover max-h-[400px]"
+            referrerPolicy="no-referrer"
+          />
+          <div className={`p-3 text-[10px] uppercase tracking-widest text-center ${
+            theme === 'sea' ? 'bg-biolume/10 text-biolume font-display' :
+            theme === 'forest' ? 'bg-[#4a5d23]/10 text-[#4a5d23] font-serif italic' :
+            theme === 'tech' ? 'bg-[#FF5C00]/10 text-[#FF5C00] font-mono' :
+            'bg-indigo-500/10 text-indigo-400 font-sans'
+          }`}>
+            {theme === 'sea' ? 'VISUAL_ARTIFACT_GENERATED' : theme === 'forest' ? 'A Vision from the Woods' : 'AI_Generated_Cover_Image'}
+          </div>
+        </motion.div>
+      )}
 
       <motion.div 
         initial={{ opacity: 0 }}

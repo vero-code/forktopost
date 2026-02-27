@@ -13,6 +13,7 @@ export default function App() {
     return (saved as Theme) || 'sea';
   });
   const [generatedPost, setGeneratedPost] = useState<string | null>(null);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [particles, setParticles] = useState<{ id: number; top: string; left: string; size?: string; delay: string }[]>([]);
@@ -36,9 +37,13 @@ export default function App() {
   const handleGenerate = async (data: SubmissionData) => {
     setIsLoading(true);
     setError(null);
+    setGeneratedImage(null);
     try {
-      const post = await generateSubmissionPost(data);
-      setGeneratedPost(post);
+      const result = await generateSubmissionPost(data);
+      setGeneratedPost(result.text);
+      if (result.imageUrl) {
+        setGeneratedImage(result.imageUrl);
+      }
     } catch (err) {
       const errorMsg = theme === 'sea' ? 'ABYSS_ERROR: The deep currents are unstable.' :
                        theme === 'forest' ? 'The forest spirits are restless.' :
@@ -52,6 +57,7 @@ export default function App() {
 
   const handleBack = () => {
     setGeneratedPost(null);
+    setGeneratedImage(null);
   };
 
   return (
@@ -174,7 +180,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30 }}
                 >
-                  <PostPreview content={generatedPost} onBack={handleBack} theme={theme} />
+                  <PostPreview content={generatedPost} imageUrl={generatedImage || undefined} onBack={handleBack} theme={theme} />
                 </motion.div>
               ) : (
                 <motion.div
