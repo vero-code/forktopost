@@ -3,17 +3,46 @@ import { GoogleGenAI } from "@google/genai";
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export interface SubmissionData {
-  repoName: string;
+  mode?: 'custom' | 'template';
+  repoName?: string;
   projectLink?: string;
   demoLink?: string;
-  techStack: string;
-  summary: string;
-  targetCommunity: string;
-  problemSolved: string;
+  techStack?: string;
+  summary?: string;
+  targetCommunity?: string;
+  problemSolved?: string;
+  template?: string;
 }
 
 export async function generateSubmissionPost(data: SubmissionData): Promise<string> {
-  const prompt = `
+  const isTemplateMode = data.mode === 'template';
+
+  const prompt = isTemplateMode 
+    ? `
+You are a World-Class Developer Advocate and Technical Writer. Your goal is to help users generate a winning submission post for the DEV Weekend Challenge.
+
+YOUR MISSION:
+Analyze the provided GitHub repository data and context to fill out the provided Markdown template.
+
+INPUT DATA:
+- Project Link: ${data.projectLink || "N/A"}
+- README/Context: ${data.summary || "N/A"}
+- Template to follow:
+${data.template}
+
+TONE & STYLE:
+- Professional yet witty (typical for DEV.to)
+- Use "I" (first person)
+- Bold key phrases
+- Scannable sections
+- Clear, energetic, and encouraging.
+
+OUTPUT REQUIREMENTS:
+1. Generate a "Post Title" at the very top.
+2. Fill out the template completely based on the repository data.
+3. Output ONLY the Markdown content.
+`
+    : `
 You are a World-Class Developer Advocate and Technical Writer. Your goal is to help users generate a winning submission post for the DEV Weekend Challenge.
 
 YOUR MISSION:

@@ -8,8 +8,30 @@ interface SubmissionFormProps {
   theme: 'original' | 'tech' | 'forest' | 'sea';
 }
 
+const DEFAULT_TEMPLATE = `*This is a submission for the [DEV Weekend Challenge: Community](https://dev.to/challenges/weekend-2026-02-28)*
+
+## The Community
+<!-- Tell us about the community you built this for -->
+
+## What I Built
+<!-- Give us an overview of your app -->
+
+## Demo
+<!-- Share a video demo or link to your project -->
+
+## Code
+<!-- Show us the code! You can embed a GitHub repo directly into your post. -->
+
+## How I Built It
+<!-- Tell us about the technologies you used -->
+
+<!-- Team Submissions: Please pick one member to publish the submission and credit teammates by listing their DEV usernames directly in the body of the post. -->
+
+<!-- Thanks for participating! -->`;
+
 export default function SubmissionForm({ onSubmit, isLoading, theme }: SubmissionFormProps) {
   const [formData, setFormData] = useState<SubmissionData>({
+    mode: 'custom',
     repoName: '',
     techStack: '',
     summary: '',
@@ -17,6 +39,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
     problemSolved: '',
     projectLink: '',
     demoLink: '',
+    template: DEFAULT_TEMPLATE,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,129 +66,213 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
 
   return (
     <form onSubmit={handleSubmit} className="space-y-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="relative">
-          <label htmlFor="repoName" className={labelClass}>
-            <Icon className="h-3 w-3" />
-            {theme === 'sea' ? '01_Artifact_Identity' : theme === 'forest' ? 'The Repository\'s Name' : '01_Repo_Name'}
-          </label>
-          <input
-            type="text"
-            id="repoName"
-            name="repoName"
-            value={formData.repoName}
-            onChange={handleChange}
-            required
-            className={inputClass}
-            placeholder={theme === 'sea' ? 'NAME_OF_THE_SUBMERGED' : theme === 'forest' ? 'What is it called?' : 'e.g., awesome-project'}
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="techStack" className={labelClass}>
-            <Icon className="h-3 w-3" />
-            {theme === 'sea' ? '02_Elemental_Composition' : theme === 'forest' ? 'The Loom of Tech' : '02_Tech_Stack'}
-          </label>
-          <input
-            type="text"
-            id="techStack"
-            name="techStack"
-            value={formData.techStack}
-            onChange={handleChange}
-            required
-            className={inputClass}
-            placeholder={theme === 'sea' ? 'REACT_GEMINI_ABYSS' : theme === 'forest' ? 'React, Gemini, Magic...' : 'e.g., React, TypeScript'}
-          />
-        </div>
+      {/* Mode Switcher */}
+      <div className="flex p-1 bg-black/20 rounded-lg border border-white/5 w-fit">
+        <button
+          type="button"
+          onClick={() => setFormData(p => ({ ...p, mode: 'custom' }))}
+          className={`px-4 py-2 rounded-md font-bold transition-all text-xs uppercase tracking-widest ${
+            formData.mode === 'custom' 
+              ? (theme === 'sea' ? 'bg-biolume text-black' : theme === 'forest' ? 'bg-[#4a5d23] text-white' : 'bg-brand text-white')
+              : 'text-muted hover:text-white'
+          }`}
+        >
+          Custom_Fields
+        </button>
+        <button
+          type="button"
+          onClick={() => setFormData(p => ({ ...p, mode: 'template' }))}
+          className={`px-4 py-2 rounded-md font-bold transition-all text-xs uppercase tracking-widest ${
+            formData.mode === 'template' 
+              ? (theme === 'sea' ? 'bg-biolume text-black' : theme === 'forest' ? 'bg-[#4a5d23] text-white' : 'bg-brand text-white')
+              : 'text-muted hover:text-white'
+          }`}
+        >
+          Template_Mode
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="relative">
-          <label htmlFor="projectLink" className={labelClass}>
-            <Icon className="h-3 w-3" />
-            {theme === 'sea' ? '03_Source_Coordinate' : theme === 'forest' ? 'Path to the Source' : '03_Project_URL'}
-          </label>
-          <input
-            type="url"
-            id="projectLink"
-            name="projectLink"
-            value={formData.projectLink || ''}
-            onChange={handleChange}
-            className={inputClass}
-            placeholder="https://github.com/..."
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="demoLink" className={labelClass}>
-            <Icon className="h-3 w-3" />
-            {theme === 'sea' ? '04_Visual_Transmission' : theme === 'forest' ? 'A Window into the World' : '04_Demo_URL'}
-          </label>
-          <input
-            type="url"
-            id="demoLink"
-            name="demoLink"
-            value={formData.demoLink || ''}
-            onChange={handleChange}
-            className={inputClass}
-            placeholder="https://..."
-          />
-        </div>
-      </div>
+      {formData.mode === 'custom' ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="relative">
+              <label htmlFor="repoName" className={labelClass}>
+                <Icon className="h-3 w-3" />
+                {theme === 'sea' ? '01_Artifact_Identity' : theme === 'forest' ? 'The Repository\'s Name' : '01_Repo_Name'}
+              </label>
+              <input
+                type="text"
+                id="repoName"
+                name="repoName"
+                value={formData.repoName}
+                onChange={handleChange}
+                required
+                className={inputClass}
+                placeholder={theme === 'sea' ? 'NAME_OF_THE_SUBMERGED' : theme === 'forest' ? 'What is it called?' : 'e.g., awesome-project'}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="techStack" className={labelClass}>
+                <Icon className="h-3 w-3" />
+                {theme === 'sea' ? '02_Elemental_Composition' : theme === 'forest' ? 'The Loom of Tech' : '02_Tech_Stack'}
+              </label>
+              <input
+                type="text"
+                id="techStack"
+                name="techStack"
+                value={formData.techStack}
+                onChange={handleChange}
+                required
+                className={inputClass}
+                placeholder={theme === 'sea' ? 'REACT_GEMINI_ABYSS' : theme === 'forest' ? 'React, Gemini, Magic...' : 'e.g., React, TypeScript'}
+              />
+            </div>
+          </div>
 
-      <div className="relative">
-        <label htmlFor="targetCommunity" className={labelClass}>
-          <Icon className="h-3 w-3" />
-          {theme === 'sea' ? '05_Kindred_Explorers' : theme === 'forest' ? 'The Kindred Spirits' : '05_Target_Community'}
-        </label>
-        <input
-          type="text"
-          id="targetCommunity"
-          name="targetCommunity"
-          value={formData.targetCommunity}
-          onChange={handleChange}
-          required
-          className={inputClass}
-          placeholder={theme === 'sea' ? 'WHO_BRAVES_THESE_WATERS?' : theme === 'forest' ? 'Who will wander these woods?' : 'e.g., Developers'}
-        />
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="relative">
+              <label htmlFor="projectLink" className={labelClass}>
+                <Icon className="h-3 w-3" />
+                {theme === 'sea' ? '03_Source_Coordinate' : theme === 'forest' ? 'Path to the Source' : '03_Project_URL'}
+              </label>
+              <input
+                type="url"
+                id="projectLink"
+                name="projectLink"
+                value={formData.projectLink || ''}
+                onChange={handleChange}
+                className={inputClass}
+                placeholder="https://github.com/..."
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="demoLink" className={labelClass}>
+                <Icon className="h-3 w-3" />
+                {theme === 'sea' ? '04_Visual_Transmission' : theme === 'forest' ? 'A Window into the World' : '04_Demo_URL'}
+              </label>
+              <input
+                type="url"
+                id="demoLink"
+                name="demoLink"
+                value={formData.demoLink || ''}
+                onChange={handleChange}
+                className={inputClass}
+                placeholder="https://..."
+              />
+            </div>
+          </div>
 
-      <div className="relative">
-        <label htmlFor="summary" className={labelClass}>
-          <Icon className="h-3 w-3" />
-          {theme === 'sea' ? '06_Artifact_History' : theme === 'forest' ? 'The Roots (README)' : '06_Context'}
-        </label>
-        <textarea
-          id="summary"
-          name="summary"
-          value={formData.summary}
-          onChange={handleChange}
-          required
-          rows={5}
-          className={`${inputClass} resize-none`}
-          placeholder={theme === 'sea' ? 'ETCH_THE_STORY_OF_ITS_ORIGIN...' : theme === 'forest' ? 'Tell the story of its birth...' : 'Paste README content...'}
-        />
-      </div>
+          <div className="relative">
+            <label htmlFor="targetCommunity" className={labelClass}>
+              <Icon className="h-3 w-3" />
+              {theme === 'sea' ? '05_Kindred_Explorers' : theme === 'forest' ? 'The Kindred Spirits' : '05_Target_Community'}
+            </label>
+            <input
+              type="text"
+              id="targetCommunity"
+              name="targetCommunity"
+              value={formData.targetCommunity}
+              onChange={handleChange}
+              required
+              className={inputClass}
+              placeholder={theme === 'sea' ? 'WHO_BRAVES_THESE_WATERS?' : theme === 'forest' ? 'Who will wander these woods?' : 'e.g., Developers'}
+            />
+          </div>
 
-      <div className="relative">
-        <label htmlFor="problemSolved" className={labelClass}>
-          <Icon className="h-3 w-3" />
-          {theme === 'sea' ? '07_Current_Stabilization' : theme === 'forest' ? 'The Thorns Removed' : '07_Problem_Solved'}
-        </label>
-        <textarea
-          id="problemSolved"
-          name="problemSolved"
-          value={formData.problemSolved}
-          onChange={handleChange}
-          required
-          rows={3}
-          className={`${inputClass} resize-none`}
-          placeholder={theme === 'sea' ? 'WHAT_BURDEN_DOES_IT_LIFT?' : theme === 'forest' ? 'What burden does it lift?' : 'What problem does it solve?'}
-        />
-      </div>
+          <div className="relative">
+            <label htmlFor="summary" className={labelClass}>
+              <Icon className="h-3 w-3" />
+              {theme === 'sea' ? '06_Artifact_History' : theme === 'forest' ? 'The Roots (README)' : '06_Context'}
+            </label>
+            <textarea
+              id="summary"
+              name="summary"
+              value={formData.summary}
+              onChange={handleChange}
+              required
+              rows={5}
+              className={`${inputClass} resize-none`}
+              placeholder={theme === 'sea' ? 'ETCH_THE_STORY_OF_ITS_ORIGIN...' : theme === 'forest' ? 'Tell the story of its birth...' : 'Paste README content...'}
+            />
+          </div>
+
+          <div className="relative">
+            <label htmlFor="problemSolved" className={labelClass}>
+              <Icon className="h-3 w-3" />
+              {theme === 'sea' ? '07_Current_Stabilization' : theme === 'forest' ? 'The Thorns Removed' : '07_Problem_Solved'}
+            </label>
+            <textarea
+              id="problemSolved"
+              name="problemSolved"
+              value={formData.problemSolved}
+              onChange={handleChange}
+              required
+              rows={3}
+              className={`${inputClass} resize-none`}
+              placeholder={theme === 'sea' ? 'WHAT_BURDEN_DOES_IT_LIFT?' : theme === 'forest' ? 'What burden does it lift?' : 'What problem does it solve?'}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="relative">
+            <label htmlFor="projectLink" className={labelClass}>
+              <Icon className="h-3 w-3" />
+              {theme === 'sea' ? '01_Source_Coordinate' : theme === 'forest' ? 'Path to the Source' : '01_Repo_URL'}
+            </label>
+            <input
+              type="url"
+              id="projectLink"
+              name="projectLink"
+              value={formData.projectLink || ''}
+              onChange={handleChange}
+              required
+              className={inputClass}
+              placeholder="https://github.com/..."
+            />
+          </div>
+
+          <div className="relative">
+            <label htmlFor="summary" className={labelClass}>
+              <Icon className="h-3 w-3" />
+              {theme === 'sea' ? '02_Artifact_Context' : theme === 'forest' ? 'The Roots (README)' : '02_Context'}
+            </label>
+            <textarea
+              id="summary"
+              name="summary"
+              value={formData.summary}
+              onChange={handleChange}
+              required
+              rows={4}
+              className={`${inputClass} resize-none`}
+              placeholder="Paste README or project context here..."
+            />
+          </div>
+
+          <div className="relative">
+            <label htmlFor="template" className={labelClass}>
+              <Icon className="h-3 w-3" />
+              {theme === 'sea' ? '03_Transmission_Template' : theme === 'forest' ? 'Ancient Scroll Template' : '03_Markdown_Template'}
+            </label>
+            <textarea
+              id="template"
+              name="template"
+              value={formData.template}
+              onChange={handleChange}
+              required
+              rows={12}
+              className={`${inputClass} resize-none font-mono text-xs`}
+              placeholder="Enter your Markdown template..."
+            />
+          </div>
+        </>
+      )}
 
       <div className="flex flex-col md:flex-row gap-6 pt-6">
         <button
           type="button"
           onClick={() => setFormData({
+            mode: formData.mode,
             repoName: '',
             techStack: '',
             summary: '',
@@ -173,6 +280,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
             problemSolved: '',
             projectLink: '',
             demoLink: '',
+            template: DEFAULT_TEMPLATE,
           })}
           className={`md:w-1/3 uppercase tracking-widest text-sm transition-colors ${
             theme === 'sea' ? 'font-display text-[10px] text-biolume/40 hover:text-biolume' :
