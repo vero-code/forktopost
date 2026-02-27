@@ -12,6 +12,8 @@ export interface SubmissionData {
   targetCommunity?: string;
   problemSolved?: string;
   template?: string;
+  youtubeUrl?: string;
+  cloudRunUrl?: string;
 }
 
 export async function generateSubmissionPost(data: SubmissionData): Promise<string> {
@@ -26,9 +28,15 @@ Analyze the provided GitHub repository data and context to fill out the provided
 
 INPUT DATA:
 - Project Link: ${data.projectLink || "N/A"}
+- YouTube Video: ${data.youtubeUrl || "N/A"}
+- Cloud Run URL: ${data.cloudRunUrl || "N/A"}
 - README/Context: ${data.summary || "N/A"}
 - Template to follow:
 ${data.template}
+
+IMPORTANT FORMATTING RULE:
+If a YouTube Video or Cloud Run URL is provided, ensure they are wrapped in Liquid tags like this: {% embed URL %}. 
+For example, if YouTube is "https://youtu.be/123", it should appear as {% embed https://youtu.be/123 %}.
 
 TONE & STYLE:
 - Professional yet witty (typical for DEV.to)

@@ -40,6 +40,8 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
     projectLink: '',
     demoLink: '',
     template: DEFAULT_TEMPLATE,
+    youtubeUrl: '',
+    cloudRunUrl: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -232,10 +234,43 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
             />
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="relative">
+              <label htmlFor="youtubeUrl" className={labelClass}>
+                <Icon className="h-3 w-3" />
+                {theme === 'sea' ? '02_Visual_Transmission' : theme === 'forest' ? 'The Moving Image' : '02_YouTube_URL'}
+              </label>
+              <input
+                type="url"
+                id="youtubeUrl"
+                name="youtubeUrl"
+                value={formData.youtubeUrl || ''}
+                onChange={handleChange}
+                className={inputClass}
+                placeholder="https://youtu.be/..."
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="cloudRunUrl" className={labelClass}>
+                <Icon className="h-3 w-3" />
+                {theme === 'sea' ? '03_Cloud_Manifestation' : theme === 'forest' ? 'The Ethereal Link' : '03_Cloud_Run_URL'}
+              </label>
+              <input
+                type="url"
+                id="cloudRunUrl"
+                name="cloudRunUrl"
+                value={formData.cloudRunUrl || ''}
+                onChange={handleChange}
+                className={inputClass}
+                placeholder="https://...run.app"
+              />
+            </div>
+          </div>
+
           <div className="relative">
             <label htmlFor="summary" className={labelClass}>
               <Icon className="h-3 w-3" />
-              {theme === 'sea' ? '02_Artifact_Context' : theme === 'forest' ? 'The Roots (README)' : '02_Context'}
+              {theme === 'sea' ? '04_Artifact_Context' : theme === 'forest' ? 'The Roots (README)' : '04_Context'}
             </label>
             <textarea
               id="summary"
@@ -252,7 +287,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
           <div className="relative">
             <label htmlFor="template" className={labelClass}>
               <Icon className="h-3 w-3" />
-              {theme === 'sea' ? '03_Transmission_Template' : theme === 'forest' ? 'Ancient Scroll Template' : '03_Markdown_Template'}
+              {theme === 'sea' ? '05_Transmission_Template' : theme === 'forest' ? 'Ancient Scroll Template' : '05_Markdown_Template'}
             </label>
             <textarea
               id="template"
