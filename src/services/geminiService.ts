@@ -112,7 +112,24 @@ IMPORTANT:
     };
 
     if (data.generateImage) {
-      const imagePrompt = `A high-quality, professional, and eye-catching cover image titled "${data.repoName || 'My Project'}". The theme should be related to: ${data.techStack || 'software development'}. Style: modern, clean, and vibrant.`;
+      let displayTitle = data.repoName;
+      if (!displayTitle && data.projectLink) {
+        try {
+          const parts = new URL(data.projectLink).pathname.split('/');
+          displayTitle = parts[parts.length - 1] || parts[parts.length - 2];
+        } catch (e) {
+          displayTitle = 'Innovation';
+        }
+      }
+      displayTitle = displayTitle || 'New Project';
+
+      const context = data.problemSolved || data.summary || '';
+      const tech = data.techStack || 'modern technology';
+      
+      const imagePrompt = `A professional, cinematic, and artistic visual metaphor for a project named "${displayTitle}". 
+      The project is about: ${context.substring(0, 200)}. 
+      Visual style: ${tech} aesthetic, vibrant bioluminescence, high-tech atmosphere, clean composition. 
+      Avoid literal text labels on the image. Focus on the essence and mood of the software.`;
       
       const imageResponse = await ai.models.generateContent({
         model: MODEL_NAME_IMAGE,
