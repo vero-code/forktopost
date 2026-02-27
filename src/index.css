@@ -1,12 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Quicksand:wght@300;400;500&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-body: "Libre Baskerville", serif;
+  --font-display: "Cinzel", serif;
+  --font-quicksand: "Quicksand", sans-serif;
+}
+
+/* Base Variables */
+:root {
+  --brand: #6366f1;
+  --surface: #0f172a;
+  --border: #1e293b;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+}
+
+/* Technical Theme Variables */
+[data-theme='tech'] {
+  --brand: #FF5C00;
+  --surface: #0F1115;
+  --border: #2D3139;
+  --text: #E1E4E8;
+  --muted: #8B949E;
+}
+
+/* Forest Theme Variables */
+[data-theme='forest'] {
+  --brand: #4a5d23;
+  --surface: #1a2f1a;
+  --border: rgba(139, 69, 19, 0.2);
+  --text: #2d241e;
+  --muted: #5d4a3e;
+  --parchment: #f4e4bc;
+  --leaf: #8da05e;
+  --gold: #ffd700;
+}
+
+/* Sea Theme Variables */
+[data-theme='sea'] {
+  --brand: #22d3ee;
+  --surface: #020617;
+  --border: rgba(34, 211, 238, 0.2);
+  --text: #f8fafc;
+  --muted: #64748b;
+  --abyss: #020617;
+  --ocean: #0f172a;
+  --biolume: #22d3ee;
+  --teal: #0d9488;
+  --pearl: #f8fafc;
 }
 
 body {
-  @apply bg-gray-900 text-white antialiased;
+  @apply antialiased transition-colors duration-500;
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+/* --- THEME SPECIFIC STYLES --- */
+
+/* Tech Grid */
+[data-theme='tech'] .theme-bg {
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Forest Background */
+[data-theme='forest'] .theme-bg {
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 200, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 200, 0.1) 0%, transparent 40%),
+    linear-gradient(to bottom, #1a2f1a, #2d4a2d);
+  background-attachment: fixed;
+}
+
+/* Sea Background */
+[data-theme='sea'] .theme-bg {
+  background: 
+    radial-gradient(circle at 50% -20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+    linear-gradient(to bottom, #020617, #0f172a);
+  background-attachment: fixed;
+}
+
+/* Parchment */
+.parchment-card {
+  background-color: #f4e4bc;
+  background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
+  box-shadow: 2px 2px 15px rgba(0,0,0,0.3), inset 0 0 50px rgba(139, 69, 19, 0.1);
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Stone Slab */
+.stone-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Fireflies */
+.firefly-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ffd700;
+  border-radius: 50%;
+  filter: blur(1px);
+  box-shadow: 0 0 10px #ffd700;
+  animation: drift 10s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* Jellyfish */
+.jelly-particle {
+  position: absolute;
+  background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.4), transparent 70%);
+  border-radius: 50% 50% 40% 40%;
+  filter: blur(4px);
+  animation: float-jelly 15s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) opacity(0.2); }
+  25% { transform: translate(20px, -30px) opacity(0.8); }
+  50% { transform: translate(-10px, -60px) opacity(0.4); }
+  75% { transform: translate(30px, -20px) opacity(0.9); }
+}
+
+@keyframes float-jelly {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  50% { transform: translate(30px, -50px) scale(1.1); opacity: 0.6; }
+}
+
+/* Caustics */
+.water-caustics {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/water.png");
+  opacity: 0.05;
+  pointer-events: none;
+  animation: caustic-move 20s infinite linear;
+}
+
+@keyframes caustic-move {
+  from { background-position: 0 0; }
+  to { background-position: 500px 500px; }
 }
