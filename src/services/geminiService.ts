@@ -21,6 +21,7 @@ export interface SubmissionData {
   youtubeUrl?: string;
   cloudRunUrl?: string;
   generateImage?: boolean;
+  addEmpathy?: boolean;
 }
 
 export interface GenerationResult {
@@ -30,6 +31,10 @@ export interface GenerationResult {
 
 export async function generateSubmissionPost(data: SubmissionData): Promise<GenerationResult> {
   const isTemplateMode = data.mode === 'template';
+
+  const empathyInstruction = data.addEmpathy 
+    ? "TONE OVERRIDE: Write with deep empathy and emotional resonance. Focus on the human struggle, the 'aha!' moment, and the heartfelt desire to help the community. Use sensory language and share personal vulnerability."
+    : "TONE: Professional yet witty (typical for DEV.to).";
 
   const prompt = isTemplateMode 
     ? `
@@ -50,8 +55,7 @@ IMPORTANT FORMATTING RULE:
 If a YouTube Video or Cloud Run URL is provided, ensure they are wrapped in Liquid tags like this: {% embed URL %}. 
 For example, if YouTube is "https://youtu.be/123", it should appear as {% embed https://youtu.be/123 %}.
 
-TONE & STYLE:
-- Professional yet witty (typical for DEV.to)
+${empathyInstruction}
 - Use "I" (first person)
 - Bold key phrases
 - Scannable sections
@@ -81,8 +85,7 @@ INPUT DATA:
 - Community Target: ${data.targetCommunity}
 - Problem Solved: ${data.problemSolved}
 
-TONE & STYLE:
-- Professional yet witty (typical for DEV.to)
+${empathyInstruction}
 - Use "I" (first person)
 - Bold key phrases
 - Scannable sections (bullet points, horizontal rules)

@@ -43,6 +43,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
     youtubeUrl: '',
     cloudRunUrl: '',
     generateImage: false,
+    addEmpathy: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -303,28 +304,54 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
             />
           </div>
 
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="generateImage"
-              name="generateImage"
-              checked={formData.generateImage}
-              onChange={handleChange}
-              className={`h-5 w-5 rounded transition-all ${
-                theme === 'sea' ? 'bg-cyan-950 border-biolume text-biolume focus:ring-biolume' :
-                theme === 'forest' ? 'bg-[#fff9e6] border-[#8b4513] text-[#4a5d23] focus:ring-[#4a5d23]' :
-                theme === 'tech' ? 'bg-black border-[#2D3139] text-[#FF5C00] focus:ring-[#FF5C00]' :
-                'bg-slate-900 border-slate-700 text-indigo-500 focus:ring-indigo-500'
-              }`}
-            />
-            <label htmlFor="generateImage" className={`text-sm font-bold uppercase tracking-widest ${
-              theme === 'sea' ? 'font-display text-biolume' :
-              theme === 'forest' ? 'font-serif text-[#4a5d23] italic' :
-              theme === 'tech' ? 'font-mono text-[#FF5C00]' :
-              'font-sans text-slate-300'
-            }`}>
-              {theme === 'sea' ? 'GENERATE_VISUAL_ARTIFACT' : theme === 'forest' ? 'Conjure an Illustration' : 'Generate_Cover_Image'}
-            </label>
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="generateImage"
+                name="generateImage"
+                checked={formData.generateImage}
+                onChange={handleChange}
+                className={`h-5 w-5 rounded transition-all ${
+                  theme === 'sea' ? 'bg-cyan-950 border-biolume text-biolume focus:ring-biolume' :
+                  theme === 'forest' ? 'bg-[#fff9e6] border-[#8b4513] text-[#4a5d23] focus:ring-[#4a5d23]' :
+                  theme === 'tech' ? 'bg-black border-[#2D3139] text-[#FF5C00] focus:ring-[#FF5C00]' :
+                  'bg-slate-900 border-slate-700 text-indigo-500 focus:ring-indigo-500'
+                }`}
+              />
+              <label htmlFor="generateImage" className={`text-sm font-bold uppercase tracking-widest ${
+                theme === 'sea' ? 'font-display text-biolume' :
+                theme === 'forest' ? 'font-serif text-[#4a5d23] italic' :
+                theme === 'tech' ? 'font-mono text-[#FF5C00]' :
+                'font-sans text-slate-300'
+              }`}>
+                {theme === 'sea' ? 'GENERATE_VISUAL_ARTIFACT' : theme === 'forest' ? 'Conjure an Illustration' : 'Generate_Cover_Image'}
+              </label>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="addEmpathy"
+                name="addEmpathy"
+                checked={formData.addEmpathy}
+                onChange={handleChange}
+                className={`h-5 w-5 rounded transition-all ${
+                  theme === 'sea' ? 'bg-cyan-950 border-biolume text-biolume focus:ring-biolume' :
+                  theme === 'forest' ? 'bg-[#fff9e6] border-[#8b4513] text-[#4a5d23] focus:ring-[#4a5d23]' :
+                  theme === 'tech' ? 'bg-black border-[#2D3139] text-[#FF5C00] focus:ring-[#FF5C00]' :
+                  'bg-slate-900 border-slate-700 text-indigo-500 focus:ring-indigo-500'
+                }`}
+              />
+              <label htmlFor="addEmpathy" className={`text-sm font-bold uppercase tracking-widest ${
+                theme === 'sea' ? 'font-display text-biolume' :
+                theme === 'forest' ? 'font-serif text-[#4a5d23] italic' :
+                theme === 'tech' ? 'font-mono text-[#FF5C00]' :
+                'font-sans text-slate-300'
+              }`}>
+                {theme === 'sea' ? 'INFUSE_EMOTIONAL_RESONANCE' : theme === 'forest' ? 'Add a Heartbeat' : 'Add_Empathy_to_Story'}
+              </label>
+            </div>
           </div>
         </>
       )}
