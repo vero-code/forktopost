@@ -1,6 +1,6 @@
 # 🔱 ForkToPost
 
-![Version](https://img.shields.io/badge/version-v0.3.0-blue)
+![Version](https://img.shields.io/badge/version-v1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -89,6 +89,19 @@ For a detailed deep-dive into the system design, data flow, and component breakd
    ```bash
    npm run dev
    ```
+
+---
+
+## 🚀 Deployment (Vercel)
+
+The easiest way to deploy **ForkToPost** is via [Vercel](https://vercel.com/):
+
+1.  **Connect your GitHub Repository** to a new Vercel project.
+2.  **Add Environment Variables**: In your project settings, add:
+    *   `GEMINI_API_KEY`: Your Google AI Studio key.
+    *   `MODEL_NAME_TEXT`: `gemini-3-flash-preview`
+    *   `MODEL_NAME_IMAGE`: `gemini-3.1-flash-image-preview`
+3.  **Vite Proxy**: The project includes a `vercel.json` file that automatically handles the API proxying for DEV.to, ensuring the direct publishing feature works in production.
 
 ---
 

@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/devto-api/(.*)",
+      "destination": "https://dev.to/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
