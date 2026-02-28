@@ -87,7 +87,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
             {copied ? (
               <>
                 <Check className="h-4 w-4 mr-2" />
-                {theme === 'sea' ? 'BUFFER_SYNCED' : theme === 'forest' ? 'Stored in Memory' : 'Copied'}
+                {theme === 'sea' ? 'BUFFER' : theme === 'forest' ? 'Stored in Memory' : 'Copied'}
               </>
             ) : (
               <>

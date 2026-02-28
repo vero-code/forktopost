@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { type SubmissionData } from '../services/geminiService';
-import { Loader2, Anchor, Scroll, Zap, Monitor } from 'lucide-react';
+import { Loader2, Anchor, Scroll, Zap, Monitor, CheckCircle2, XCircle, FileSearch } from 'lucide-react';
+import { checkGitHubRepo, fetchReadme } from '../services/githubService';
 
 interface SubmissionFormProps {
   onSubmit: (data: SubmissionData) => void;
@@ -47,9 +48,82 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
     includeArchitecture: false,
   });
 
+  const [repoStatus, setRepoStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [fetchSuccess, setFetchSuccess] = useState(false);
+  const [lastCheckedUrl, setLastCheckedUrl] = useState('');
+
+  const handleCheckRepo = async (url: string) => {
+    if (!url || !url.includes('github.com') || url === lastCheckedUrl) return;
+    
+    setRepoStatus('loading');
+    setLastCheckedUrl(url);
+    
+    const info = await checkGitHubRepo(url);
+    if (info) {
+      setRepoStatus('success');
+      // Auto-fill repo name if empty
+      if (!formData.repoName) {
+        setFormData(prev => ({ ...prev, repoName: info.name }));
+      }
+    } else {
+      setRepoStatus('error');
+    }
+  };
+
+  const handleFetchReadme = async () => {
+    if (!formData.projectLink) return;
+    
+    let path = '';
+    const url = formData.projectLink;
+    if (url.includes('github.com')) {
+      try {
+        const urlObj = new URL(url.startsWith('http') ? url : `https://${url}`);
+        path = urlObj.pathname.startsWith('/') ? urlObj.pathname.slice(1) : urlObj.pathname;
+      } catch (e) {
+        setRepoStatus('error');
+        return;
+      }
+    } else {
+      path = url;
+    }
+
+    const segments = path.split('/').filter(Boolean);
+    if (segments.length < 2) return;
+
+    const owner = segments[0];
+    const repo = segments[1];
+    
+    setRepoStatus('loading');
+    const readme = await fetchReadme(owner, repo);
+    
+    if (readme !== null) {
+      setFormData(prev => ({ 
+        ...prev, 
+        summary: readme,
+        repoName: prev.repoName || repo
+      }));
+      setRepoStatus('success');
+      setFetchSuccess(true);
+      setTimeout(() => setFetchSuccess(false), 2000);
+      
+      // Auto-scroll to the summary field
+      setTimeout(() => {
+        const el = document.getElementById('summary');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    } else {
+      setRepoStatus('error');
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    
+    if (name === 'projectLink') {
+      setRepoStatus('idle');
+    }
+    
     setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
@@ -141,15 +215,43 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 <Icon className="h-3 w-3" />
                 {theme === 'sea' ? '03_Source_Coordinate' : theme === 'forest' ? 'Path to the Source' : '03_Project_URL'}
               </label>
-              <input
-                type="url"
-                id="projectLink"
-                name="projectLink"
-                value={formData.projectLink || ''}
-                onChange={handleChange}
-                className={inputClass}
-                placeholder="https://github.com/..."
-              />
+              <div className="relative group">
+                <input
+                  type="url"
+                  id="projectLink"
+                  name="projectLink"
+                  value={formData.projectLink || ''}
+                  onChange={handleChange}
+                  onBlur={(e) => handleCheckRepo(e.target.value)}
+                  className={`${inputClass} pr-10`}
+                  placeholder="https://github.com/..."
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                  {repoStatus === 'loading' && <Loader2 className="h-4 w-4 animate-spin text-muted" />}
+                  {repoStatus === 'success' && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                  {repoStatus === 'error' && <XCircle className="h-4 w-4 text-red-500" />}
+                  
+                  {repoStatus === 'success' && (
+                    <button
+                      type="button"
+                      onClick={handleFetchReadme}
+                      title="Fetch README"
+                      className={`p-1 rounded-full transition-colors flex items-center justify-center ${
+                        theme === 'sea' ? 'bg-biolume/20 text-biolume hover:bg-biolume hover:text-black' :
+                        theme === 'forest' ? 'bg-[#4a5d23]/20 text-[#4a5d23] hover:bg-[#4a5d23] hover:text-white' :
+                        'bg-brand/20 text-brand hover:bg-brand hover:text-white'
+                      }`}
+                    >
+                      <FileSearch className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+              </div>
+              {repoStatus === 'error' && (
+                <p className="absolute -bottom-6 left-0 text-[10px] font-bold text-red-500 uppercase tracking-widest animate-pulse">
+                  Invalid Repository Connection
+                </p>
+              )}
             </div>
             <div className="relative">
               <label htmlFor="demoLink" className={labelClass}>
@@ -197,7 +299,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               onChange={handleChange}
               required
               rows={5}
-              className={`${inputClass} resize-none`}
+              className={`${inputClass} resize-none ${fetchSuccess ? 'ring-2 ring-brand ring-offset-2 ring-offset-black' : ''} transition-all duration-500`}
               placeholder={theme === 'sea' ? 'ETCH_THE_STORY_OF_ITS_ORIGIN...' : theme === 'forest' ? 'Tell the story of its birth...' : 'Paste README content...'}
             />
           </div>
@@ -226,16 +328,44 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               <Icon className="h-3 w-3" />
               {theme === 'sea' ? '01_Source_Coordinate' : theme === 'forest' ? 'Path to the Source' : '01_Repo_URL'}
             </label>
-            <input
-              type="url"
-              id="projectLink"
-              name="projectLink"
-              value={formData.projectLink || ''}
-              onChange={handleChange}
-              required
-              className={inputClass}
-              placeholder="https://github.com/..."
-            />
+            <div className="relative group">
+              <input
+                type="url"
+                id="projectLink"
+                name="projectLink"
+                value={formData.projectLink || ''}
+                onChange={handleChange}
+                onBlur={(e) => handleCheckRepo(e.target.value)}
+                required
+                className={`${inputClass} pr-10`}
+                placeholder="https://github.com/..."
+              />
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                {repoStatus === 'loading' && <Loader2 className="h-4 w-4 animate-spin text-muted" />}
+                {repoStatus === 'success' && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                {repoStatus === 'error' && <XCircle className="h-4 w-4 text-red-500" />}
+                
+                {repoStatus === 'success' && (
+                  <button
+                    type="button"
+                    onClick={handleFetchReadme}
+                    title="Fetch README"
+                    className={`p-1 rounded-full transition-colors flex items-center justify-center ${
+                      theme === 'sea' ? 'bg-biolume/20 text-biolume hover:bg-biolume hover:text-black' :
+                      theme === 'forest' ? 'bg-[#4a5d23]/20 text-[#4a5d23] hover:bg-[#4a5d23] hover:text-white' :
+                      'bg-brand/20 text-brand hover:bg-brand hover:text-white'
+                    }`}
+                  >
+                    <FileSearch className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+            {repoStatus === 'error' && (
+              <p className="absolute -bottom-6 left-0 text-[10px] font-bold text-red-500 uppercase tracking-widest animate-pulse">
+                Invalid Repository Connection
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -283,7 +413,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               onChange={handleChange}
               required
               rows={4}
-              className={`${inputClass} resize-none`}
+              className={`${inputClass} resize-none ${fetchSuccess ? 'ring-2 ring-brand ring-offset-2 ring-offset-black' : ''} transition-all duration-500`}
               placeholder="Paste README or project context here..."
             />
           </div>
@@ -406,8 +536,8 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
         </button>
         <button
           type="submit"
-          disabled={isLoading}
-          className={`md:w-2/3 font-bold py-4 md:py-5 px-4 md:px-8 uppercase tracking-wider md:tracking-[0.2em] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 text-base md:text-lg ${
+          disabled={isLoading || repoStatus === 'loading' || repoStatus === 'error'}
+          className={`md:w-2/3 font-bold py-4 md:py-5 px-4 md:px-8 uppercase tracking-wider md:tracking-[0.2em] transition-all disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed flex items-center justify-center gap-4 text-base md:text-lg ${
             theme === 'sea' ? 'pearl-button rounded-none font-display' :
             theme === 'forest' ? 'golden-seed rounded-full font-serif text-[#4a3728]' :
             theme === 'tech' ? 'bg-[#FF5C00] hover:bg-[#FF7A33] text-black font-mono' :
