@@ -6,7 +6,7 @@ import { Sparkles, Waves, Anchor, Lightbulb, Zap, Leaf, Flower, Wind, Monitor, P
 import { motion, AnimatePresence } from 'motion/react';
 import { MOCK_POST_CONTENT, MOCK_IMAGE_URL } from './services/mockData';
 import { getDevToUserProfile } from './services/devToService';
-import { User as UserIcon, Globe, AlertCircle, Loader2, LogOut, Code2 } from 'lucide-react';
+import { User as UserIcon, Globe, AlertCircle, Loader2, LogOut, Code2, Copy, Check, Share2, ArrowLeft } from 'lucide-react';
 
 type Theme = 'original' | 'tech' | 'forest' | 'sea';
 
@@ -25,6 +25,8 @@ export default function App() {
   const [devToProfile, setDevToProfile] = useState<any>(null);
   const [isVerifying, setIsVerifying] = useState(false);
   const [devToError, setDevToError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [showPublishModal, setShowPublishModal] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -97,6 +99,14 @@ export default function App() {
   const handleTestPreview = () => {
     setGeneratedPost(MOCK_POST_CONTENT);
     setGeneratedImage(MOCK_IMAGE_URL);
+  };
+
+  const handleCopy = () => {
+    if (generatedPost) {
+      navigator.clipboard.writeText(generatedPost);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (
@@ -371,7 +381,7 @@ export default function App() {
           </p>
         </header>
 
-        <main className="max-w-4xl mx-auto">
+        <main className={`${generatedPost ? 'max-w-6xl' : 'max-w-4xl'} mx-auto transition-all duration-500`}>
           <AnimatePresence mode="wait">
             {error && (
               <motion.div
@@ -397,19 +407,176 @@ export default function App() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
               >
-                <PostPreview 
-                  content={generatedPost} 
-                  imageUrl={generatedImage || undefined} 
-                  onBack={handleBack} 
-                  theme={theme}
-                  apiKey={devToApiKey}
+                <div className="lg:col-span-8">
+                  <PostPreview 
+                    content={generatedPost} 
+                    imageUrl={generatedImage || undefined} 
+                    onBack={handleBack} 
+                    theme={theme}
+                    apiKey={devToApiKey}
                   userProfile={devToProfile}
                   onApiKeyChange={(key) => {
                     setDevToApiKey(key);
                     localStorage.setItem('devto-api-key', key);
                   }}
+                  showPublishModal={showPublishModal}
+                  onClosePublishModal={() => setShowPublishModal(false)}
                 />
+                </div>
+                
+                <aside className="lg:col-span-4 space-y-8">
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className={`p-8 space-y-8 ${
+                      theme === 'sea' ? 'stone-slab border-l-4 border-teal-glow' :
+                      theme === 'forest' ? 'parchment-card rotate-1' :
+                      theme === 'tech' ? 'bg-[#161B22] border border-tech-border' :
+                      'bg-gray-800/50 border border-gray-700 rounded-xl'
+                    }`}
+                  >
+                    {/* Action Buttons */}
+                    <div className="space-y-4">
+                      <button
+                        onClick={handleCopy}
+                        className={`w-full py-4 font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3 ${
+                          copied
+                            ? 'bg-emerald-500 text-slate-900 shadow-lg'
+                            : theme === 'sea' ? 'pearl-button' :
+                              theme === 'forest' ? 'golden-seed text-[#4a3728]' :
+                              theme === 'tech' ? 'bg-tech-brand text-black font-mono rounded-none' :
+                              'bg-indigo-600 text-white rounded-xl font-sans shadow-lg shadow-indigo-500/20'
+                        }`}
+                      >
+                        {copied ? (
+                          <>
+                            <Check className="h-5 w-5" />
+                            {theme === 'sea' ? 'BUFFER' : theme === 'forest' ? 'Stored in Memory' : 'Copied'}
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-5 w-5" />
+                            {theme === 'sea' ? 'EXTRACT' : theme === 'forest' ? 'Gather the Words' : 'Copy_Markdown'}
+                          </>
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => setShowPublishModal(true)}
+                        className={`w-full py-4 border uppercase tracking-widest transition-all flex items-center justify-center gap-3 ${
+                          theme === 'sea' ? 'border-biolume/20 hover:bg-biolume/5 font-display text-biolume' :
+                          theme === 'forest' ? 'border-[#8b4513]/20 hover:bg-[#8b4513]/5 font-serif italic text-[#4a3728]' :
+                          theme === 'tech' ? 'border-tech-border hover:bg-white/5 font-mono text-tech-muted rounded-none' :
+                          'border-gray-700 hover:bg-white/5 font-sans text-gray-400 rounded-xl'
+                        }`}
+                      >
+                        <Share2 className="h-5 w-5" />
+                        {theme === 'sea' ? 'BROADCAST_PROTO' : theme === 'forest' ? 'Echo to World' : 'Publish_to_DEV'}
+                      </button>
+
+                      <button
+                        onClick={handleBack}
+                        className={`w-full py-4 border uppercase tracking-widest transition-all flex items-center justify-center gap-3 ${
+                          theme === 'sea' ? 'border-biolume/20 hover:bg-biolume/5 font-display text-biolume' :
+                          theme === 'forest' ? 'border-[#8b4513]/20 hover:bg-[#8b4513]/5 font-serif italic text-[#4a3728]' :
+                          theme === 'tech' ? 'border-tech-border hover:bg-white/5 font-mono text-tech-muted rounded-none' :
+                          'border-gray-700 hover:bg-white/5 font-sans text-gray-400 rounded-xl'
+                        }`}
+                      >
+                        <ArrowLeft className="h-5 w-5" />
+                        {theme === 'sea' ? 'RE_CALIBRATE' : theme === 'forest' ? 'Rewhisper' : 'Edit_Input'}
+                      </button>
+                    </div>
+
+                    <div className="pt-8 border-t border-white/5">
+                      <h3 className={`font-bold mb-6 flex items-center italic uppercase tracking-widest ${
+                        theme === 'sea' ? 'font-display text-lg text-pearl' :
+                        theme === 'forest' ? 'font-serif text-xl text-[#4a3728]' :
+                        theme === 'tech' ? 'font-mono text-xs text-white' :
+                        'text-lg text-white font-sans'
+                      }`}>
+                      <Lightbulb className={`h-5 w-5 mr-2 ${
+                        theme === 'sea' ? 'text-biolume' :
+                        theme === 'forest' ? 'text-forest-moss' :
+                        theme === 'tech' ? 'text-tech-brand' :
+                        'text-yellow-400'
+                      }`} />
+                      {theme === 'sea' ? 'Abyss_Echoes' :
+                       theme === 'forest' ? 'Forest Wisdom' :
+                       theme === 'tech' ? 'Optimization_Tips' :
+                       'Pro Tips'}
+                    </h3>
+                    
+                    <div className={`space-y-6 leading-relaxed ${
+                      theme === 'sea' ? 'font-sans text-sm text-slate-400 tracking-wide' :
+                      theme === 'forest' ? 'font-serif text-lg text-[#5d4a3e] italic' :
+                      theme === 'tech' ? 'font-mono text-[12px] text-tech-muted' :
+                      'text-gray-400 font-sans'
+                    }`}>
+                      {theme === 'forest' ? (
+                        <>
+                          <p><span className="text-forest-moss font-bold">I.</span> Describe the <span className="text-[#4a3728] font-bold underline decoration-forest-leaf">thorns</span> your project removes.</p>
+                          <p><span className="text-forest-moss font-bold">II.</span> Seek the <span className="text-[#4a3728] font-bold underline decoration-forest-leaf">kindred spirits</span> in the woods.</p>
+                          <p><span className="text-forest-moss font-bold">III.</span> Let the <span className="text-[#4a3728] font-bold underline decoration-forest-leaf">README</span> be your roots.</p>
+                        </>
+                      ) : theme === 'sea' ? (
+                        <>
+                          <p><span className="text-biolume font-bold">I.</span> Etch the <span className="text-pearl font-bold underline decoration-biolume/30">core purpose</span> into the stone.</p>
+                          <p><span className="text-biolume font-bold">II.</span> Call to the <span className="text-pearl font-bold underline decoration-biolume/30">kindred explorers</span> of the deep.</p>
+                          <p><span className="text-biolume font-bold">III.</span> Let the <span className="text-pearl font-bold underline decoration-biolume/30">README</span> be the bioluminescent trail.</p>
+                        </>
+                      ) : theme === 'tech' ? (
+                        <>
+                          <p><span className="text-tech-brand font-bold">01_</span> Define the <span className="text-white">problem</span> with precision.</p>
+                          <p><span className="text-tech-brand font-bold">02_</span> Target a <span className="text-white">niche community</span>.</p>
+                          <p><span className="text-tech-brand font-bold">03_</span> Provide the full <span className="text-white">README.md</span> context.</p>
+                        </>
+                      ) : (
+                        <ul className="list-disc list-inside space-y-2">
+                          <li>Be specific about the <strong>problem</strong>.</li>
+                          <li>Mention your <strong>target audience</strong>.</li>
+                          <li>Paste your full <strong>README</strong> content.</li>
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+
+                  {theme === 'sea' && (
+                    <div className="text-center p-6 border border-biolume/10 bg-biolume/5">
+                      <div className="flex items-center justify-center gap-2 text-biolume/40 font-display tracking-[0.2em] text-[10px] uppercase">
+                        <div className="h-1.5 w-1.5 rounded-full bg-biolume animate-ping" />
+                        <span>Scanning_Deep_Currents...</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {theme === 'tech' && (
+                    <div className="border border-tech-border p-6 bg-tech-brand/5">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="font-mono text-[10px] text-tech-brand uppercase font-bold">System_Status</span>
+                        <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                      </div>
+                      <div className="space-y-2 font-mono text-[10px] text-tech-muted">
+                        <div className="flex justify-between"><span>API_LATENCY</span><span className="text-white">24ms</span></div>
+                        <div className="flex justify-between"><span>MODEL_ID</span><span className="text-white">GEMINI_3.1_PRO</span></div>
+                        <div className="flex justify-between"><span>UPTIME</span><span className="text-white">99.9%</span></div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {theme === 'forest' && (
+                    <div className="text-center p-6 border-2 border-dashed border-parchment/30 rounded-full">
+                      <div className="flex items-center justify-center gap-2 text-parchment/60 font-serif italic text-sm">
+                        <div className="h-1.5 w-1.5 rounded-full bg-forest-leaf animate-ping" />
+                        <span>The forest is listening...</span>
+                      </div>
+                    </div>
+                  )}
+                </aside>
               </motion.div>
             ) : (
               <motion.div

@@ -14,11 +14,12 @@ interface PostPreviewProps {
   apiKey: string;
   userProfile: any;
   onApiKeyChange: (key: string) => void;
+  showPublishModal: boolean;
+  onClosePublishModal: () => void;
 }
 
-export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, userProfile, onApiKeyChange }: PostPreviewProps) {
+export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, userProfile, onApiKeyChange, showPublishModal, onClosePublishModal }: PostPreviewProps) {
   const [copied, setCopied] = useState(false);
-  const [showPublish, setShowPublish] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishStatus, setPublishStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -71,59 +72,19 @@ export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, 
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap md:flex-nowrap gap-4 w-full md:w-auto">
-          <button
-            onClick={() => setShowPublish(true)}
-            className={`flex-1 md:flex-none flex items-center justify-center px-4 md:px-6 py-3 border uppercase tracking-wider md:tracking-widest transition-colors text-xs md:text-sm ${
-              theme === 'sea' ? 'border-biolume/20 hover:bg-biolume/5 font-display text-biolume' :
-              theme === 'forest' ? 'border-[#8b4513]/20 hover:bg-[#8b4513]/5 font-serif italic text-[#4a3728]' :
-              theme === 'tech' ? 'border-[#2D3139] hover:bg-white/5 font-mono text-[#8B949E]' :
-              'border-slate-700 hover:bg-white/5 font-sans text-slate-400 rounded-lg'
-            }`}
-          >
-            <Share2 className="h-4 w-4 mr-2" />
-            {theme === 'sea' ? 'BROADCAST_PROTO' : theme === 'forest' ? 'Echo to World' : 'Publish_to_DEV'}
-          </button>
-          <button
-            onClick={onBack}
-            className={`flex-1 md:flex-none flex items-center justify-center px-4 md:px-6 py-3 border uppercase tracking-wider md:tracking-widest transition-colors text-xs md:text-sm ${
-              theme === 'sea' ? 'border-biolume/20 hover:bg-biolume/5 font-display text-biolume' :
-              theme === 'forest' ? 'border-[#8b4513]/20 hover:bg-[#8b4513]/5 font-serif italic text-[#4a3728]' :
-              theme === 'tech' ? 'border-[#2D3139] hover:bg-white/5 font-mono text-[#8B949E]' :
-              'border-slate-700 hover:bg-white/5 font-sans text-slate-400 rounded-lg'
-            }`}
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {theme === 'sea' ? 'RE_CALIBRATE' : theme === 'forest' ? 'Rewhisper' : 'Edit_Input'}
-          </button>
-          <button
-            onClick={handleCopy}
-            className={`flex-1 md:flex-none flex items-center justify-center px-4 md:px-8 py-3 font-bold uppercase tracking-wider md:tracking-[0.2em] transition-all text-xs md:text-sm ${
-              copied
-                ? 'bg-emerald-500 text-slate-900 shadow-lg'
-                : theme === 'sea' ? 'pearl-button' :
-                  theme === 'forest' ? 'golden-seed text-[#4a3728]' :
-                  theme === 'tech' ? 'bg-[#FF5C00] text-black font-mono' :
-                  'bg-indigo-600 text-white rounded-lg font-sans'
-            }`}
-          >
-            {copied ? (
-              <>
-                <Check className="h-4 w-4 mr-2" />
-                {theme === 'sea' ? 'BUFFER' : theme === 'forest' ? 'Stored in Memory' : 'Copied'}
-              </>
-            ) : (
-              <>
-                <Copy className="h-4 w-4 mr-2" />
-                {theme === 'sea' ? 'EXTRACT' : theme === 'forest' ? 'Gather the Words' : 'Copy_Markdown'}
-              </>
-            )}
-          </button>
+        <div className="flex gap-4">
+          <div className={`p-1.5 rounded-full ${
+            theme === 'sea' ? 'bg-biolume/10 text-biolume/40' :
+            theme === 'forest' ? 'bg-[#4a5d23]/10 text-[#4a5d23]/40' :
+            'bg-white/5 text-muted'
+          }`}>
+            <Icon className="h-4 w-4" />
+          </div>
         </div>
       </div>
 
       <AnimatePresence>
-        {showPublish && (
+        {showPublishModal && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -160,7 +121,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, 
                     Post successfully drafted on DEV.to!
                   </p>
                   <button
-                    onClick={() => setShowPublish(false)}
+                    onClick={onClosePublishModal}
                     className="w-full py-3 bg-emerald-500 text-slate-900 font-bold rounded-lg uppercase tracking-widest text-xs"
                   >
                     Close
@@ -227,7 +188,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, 
 
                   <div className="flex gap-4 pt-4">
                     <button
-                      onClick={() => setShowPublish(false)}
+                      onClick={onClosePublishModal}
                       className={`flex-1 py-3 border text-xs uppercase tracking-widest ${
                         theme === 'sea' ? 'border-biolume/20 font-display text-biolume hover:bg-biolume/5' :
                         theme === 'forest' ? 'border-[#8b4513]/20 font-serif italic text-[#4a3728] hover:bg-[#8b4513]/5' :
