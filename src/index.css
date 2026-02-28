@@ -32,13 +32,13 @@
   --color-tech-text: #E1E4E8;
 }
 
-/* Base Variables */
+/* Base Variables (Origin Theme) */
 :root {
-  --brand: #6366f1;
-  --surface: #0f172a;
-  --border: #1e293b;
-  --text: #f8fafc;
-  --muted: #94a3b8;
+  --brand: #4f46e5;
+  --surface: #111827;
+  --border: #374151;
+  --text: #ffffff;
+  --muted: #9ca3af;
 }
 
 /* Technical Theme Variables */

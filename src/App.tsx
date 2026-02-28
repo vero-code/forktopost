@@ -6,7 +6,7 @@ import { Sparkles, Waves, Anchor, Lightbulb, Zap, Leaf, Flower, Wind, Monitor, P
 import { motion, AnimatePresence } from 'motion/react';
 import { MOCK_POST_CONTENT, MOCK_IMAGE_URL } from './services/mockData';
 import { getDevToUserProfile } from './services/devToService';
-import { User as UserIcon, Globe, AlertCircle, Loader2, LogOut } from 'lucide-react';
+import { User as UserIcon, Globe, AlertCircle, Loader2, LogOut, Code2 } from 'lucide-react';
 
 type Theme = 'original' | 'tech' | 'forest' | 'sea';
 
@@ -338,11 +338,11 @@ export default function App() {
             transition={{ duration: 1 }}
             className="inline-block mb-6"
           >
-            <div className="relative">
+            <div className={theme === 'original' ? "bg-indigo-600 p-3 rounded-xl shadow-lg shadow-indigo-500/20 inline-block" : "relative"}>
               {theme === 'sea' ? <Waves className="h-20 w-20 text-biolume animate-pulse" /> :
                theme === 'forest' ? <Leaf className="h-16 w-16 text-forest-leaf animate-pulse" /> :
                theme === 'tech' ? <Zap className="h-16 w-16 text-tech-brand animate-pulse" /> :
-               <Monitor className="h-16 w-16 text-indigo-500 animate-pulse" />}
+               <Code2 className="h-8 w-8 text-white" />}
               
               {theme === 'forest' && <Flower className="h-6 w-6 text-pink-400 absolute -top-2 -right-2" />}
               {theme === 'sea' && <Zap className="h-8 w-8 text-cyan-300 absolute -top-2 -right-2 blur-[1px]" />}
@@ -353,16 +353,16 @@ export default function App() {
             theme === 'sea' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-display text-pearl drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' :
             theme === 'forest' ? 'text-6xl font-serif font-bold tracking-tight text-parchment drop-shadow-lg italic' :
             theme === 'tech' ? 'text-5xl font-black tracking-tighter italic font-sans text-white uppercase' :
-            'text-7xl font-bold tracking-[0.2em] uppercase font-sans text-white'
+            'text-4xl font-bold tracking-tight text-white sm:text-5xl mb-4 font-sans'
           }`}>
-            Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-forest-leaf' : theme === 'tech' ? 'text-tech-brand' : 'text-indigo-500'}>To</span>Post
+            Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-forest-leaf' : theme === 'tech' ? 'text-tech-brand' : 'text-indigo-400'}>To</span>Post
           </h1>
           
           <p className={`text-xl max-w-2xl mx-auto ${
             theme === 'sea' ? 'uppercase italic text-biolume/60 font-quicksand tracking-widest' :
             theme === 'forest' ? 'text-parchment/80 font-serif italic' :
             theme === 'tech' ? 'font-mono text-sm text-tech-muted' :
-            'uppercase italic text-slate-400 font-sans'
+            'text-lg text-gray-400 font-sans'
           }`}>
             {theme === 'sea' ? 'Deep-sea technical alchemy. Transform your code in the bioluminescent abyss.' :
              theme === 'forest' ? 'Where code blossoms into stories. Whisper your repository\'s secrets to the forest.' :
@@ -381,7 +381,7 @@ export default function App() {
                 className={`px-6 py-4 mb-8 backdrop-blur-md border ${
                   theme === 'sea' ? 'bg-cyan-950/30 border-cyan-500/50 text-cyan-100 font-display tracking-widest text-sm' :
                   theme === 'forest' ? 'bg-red-900/30 border-red-500/50 text-red-100 font-serif italic' :
-                  'bg-red-900/10 border-red-500/50 text-red-400 font-mono text-xs'
+                  'bg-red-900/50 border border-red-500 text-red-200 font-sans rounded-lg'
                 }`}
               >
                 {theme === 'sea' ? <Anchor className="h-5 w-5 mr-3 inline" /> :
@@ -421,15 +421,15 @@ export default function App() {
                   theme === 'sea' ? 'stone-slab border-t-4 border-biolume' :
                   theme === 'forest' ? 'parchment-card' :
                   theme === 'tech' ? 'bg-[#161B22] border border-tech-border' :
-                  'bg-slate-800/50 border border-slate-700 rounded-2xl'
+                  'bg-gray-800 rounded-2xl shadow-xl border border-gray-700'
                 }`}
               >
                 <div className={`flex items-center gap-3 mb-10 border-b pb-6 ${
                   theme === 'sea' ? 'border-biolume/20' :
                   theme === 'forest' ? 'border-[#8b4513]/20' :
-                  'border-tech-border'
+                  'border-gray-700'
                 }`}>
-                  <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-tech-brand'}`} />
+                  <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-indigo-400'}`} />
                   <h2 className={`text-2xl font-bold ${
                     theme === 'sea' ? 'font-display text-pearl tracking-[0.15em] uppercase' :
                     theme === 'forest' ? 'font-serif text-[#4a3728] italic' :
@@ -438,7 +438,8 @@ export default function App() {
                   }`}>
                     {theme === 'sea' ? 'Abyssal_Initialization' :
                      theme === 'forest' ? 'Ancient Scroll of Creation' :
-                     'Generation_Protocol'}
+                     theme === 'tech' ? 'Generation_Protocol' :
+                     'Project Details'}
                   </h2>
                 </div>
                 <SubmissionForm onSubmit={handleGenerate} isLoading={isLoading} theme={theme} />
