@@ -324,9 +324,9 @@ export default function PostPreview({ content, imageUrl, theme, apiKey, userProf
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className={`prose max-w-none p-8 md:p-12 border overflow-auto max-h-[70vh] ${
-          theme === 'sea' ? 'prose-invert bg-cyan-950/20 border-biolume/10 rounded-none prose-headings:font-display prose-headings:text-biolume prose-p:font-body prose-p:text-slate-300' :
+          theme === 'sea' ? 'prose-invert bg-cyan-950/20 border-biolume/10 rounded-none prose-headings:font-display prose-headings:text-biolume prose-p:font-body prose-p:text-slate-300 prose-li:font-body prose-li:text-slate-300' :
           theme === 'forest' ? 'prose-stone prose-lg bg-[#fff9e6]/30 border-[#8b4513]/10 rounded-lg prose-headings:font-serif prose-headings:italic prose-headings:text-[#4a5d23] prose-p:font-serif prose-p:text-[#5d4a3e] prose-p:italic prose-p:text-xl prose-li:font-serif prose-li:text-[#5d4a3e] prose-li:italic prose-li:text-xl prose-hr:border-[#8b4513]/30 marker:text-[#4a5d23]' :
-          theme === 'tech' ? 'prose-invert bg-black/40 border-[#2D3139] rounded-none prose-headings:font-mono prose-headings:text-[#FF5C00] prose-p:font-mono prose-p:text-[#8B949E]' :
+          theme === 'tech' ? 'prose-invert bg-black/40 border-[#2D3139] rounded-none prose-headings:font-mono prose-headings:text-[#FF5C00] prose-p:font-mono prose-p:text-[#8B949E] prose-li:font-mono prose-li:text-[#8B949E]' :
           'prose-invert bg-slate-900/50 border-slate-700 rounded-xl prose-headings:text-white prose-p:text-slate-400'
         }`}
       >
