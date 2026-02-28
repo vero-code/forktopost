@@ -101,7 +101,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative overflow-hidden theme-bg">
-      {theme === 'sea' && <div className="water-caustics" />}
+      {theme === 'sea' && <div className="ocean-overlay" />}
+      {theme === 'sea' && <div className="caustics" />}
       
       {/* Particles */}
       {particles.map((p) => (
@@ -190,7 +191,7 @@ export default function App() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               className={`max-w-md w-full p-8 ${
-                theme === 'sea' ? 'stone-card border-biolume/40' :
+                theme === 'sea' ? 'stone-slab border-biolume/40' :
                 theme === 'forest' ? 'parchment-card' :
                 theme === 'tech' ? 'bg-[#0F1115] border border-[#2D3139]' :
                 'bg-slate-800 border-slate-700 rounded-2xl'
@@ -224,7 +225,7 @@ export default function App() {
                     }}
                     placeholder="forem_..."
                     className={`w-full p-3 bg-black/20 border transition-all text-sm ${
-                      theme === 'sea' ? 'border-biolume/20 focus:border-biolume font-display text-biolume' :
+                      theme === 'sea' ? 'border-biolume/20 focus:border-biolume font-display text-biolume uppercase tracking-widest' :
                       theme === 'forest' ? 'border-[#8b4513]/20 focus:border-[#4a5d23] font-serif italic' :
                       theme === 'tech' ? 'border-[#2D3139] focus:border-[#FF5C00] font-mono text-white' :
                       'border-slate-700 focus:border-indigo-500 rounded-lg text-white'
@@ -417,7 +418,7 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
                 className={`p-8 md:p-12 ${
-                  theme === 'sea' ? 'stone-card border-t-4 border-biolume' :
+                  theme === 'sea' ? 'stone-slab border-t-4 border-biolume' :
                   theme === 'forest' ? 'parchment-card' :
                   theme === 'tech' ? 'bg-[#0F1115] border border-[#2D3139]' :
                   'bg-slate-800/50 border border-slate-700 rounded-2xl'
