@@ -1,24 +1,28 @@
-export const MOCK_POST_CONTENT = `Bringing Transparency and Intelligence to the Agentic Internet
+export const MOCK_POST_CONTENT = `🔱 ForkToPost: Transform Your Code into Compelling Stories
 
 This is a submission for the [DEV Weekend Challenge: Community](https://dev.to/challenges/weekend-2026-02-28)
 
 ## The Community
-I built **XBot AI** for the creators, trend-watchers, and builders of the **Agentic Internet**. In a world where AI-generated content is becoming ubiquitous, we face two major challenges: **authenticity and transparency**. I wanted to empower X (formerly Twitter) users with an autonomous assistant that doesn't just "post into the void," but actually listens to the pulse of the internet while keeping a **verifiable, permanent record** of its actions on-chain.
+I built **ForkToPost** for the builders, the hackers, and the storytellers of the **DEV community**. Every weekend, dozens of incredible projects are born during challenges, but many of them never reach their full potential because writing a compelling submission takes time—time that we'd rather spend coding. I wanted to create a tool that acts as a "Technical Sentinel," helping developers articulate their value proposition, technical depth, and creative spark with the help of **Gemini AI**.
 
 ## What I Built
-XBot AI is more than just a chatbot; it's a **Technical Sentinel**. It monitors specific X accounts and global trends, analyzes them using the **Gemini 1.5 Flash API**, and generates insightful summaries. 
+ForkToPost is an immersive, multimodal workspace designed to turn a GitHub URL into a winning DEV.to post. It doesn't just "summarize"—it weaves a narrative. 
+
+- **AI-Powered Narrative**: Uses \`gemini-3-flash-preview\` to analyze repos.
+- **Visual Metaphors**: Generates cinematic project covers via \`gemini-3.1-flash-image-preview\`.
+- **Direct Pipeline**: Integrated **ImgBB** for image hosting and one-click publishing to **DEV.to** drafts.
 
 ## Demo
-{% embed https://youtu.be/dQw4w9WgXcQ %}
+{% embed https://github.com/vero-code/forktopost %}
 
 ## How I Built It
-The core of XBot AI uses **React** for the dashboard and **Google Cloud Run** for the background processing. The heavy lifting is done by **Gemini**, which provides the semantic understanding of complex social media threads.
+The core of ForkToPost is built on the bleeding edge: **React 19**, **Vite**, and **Tailwind CSS 4**. The transition between the "Abyssal Sea" and "Enchanted Forest" themes is powered by **Motion**, creating a workspace that feels alive and reactive to the project's vibe.
 
 ## Architecture & Tech Deep Dive
-The system follows a reactive architecture:
-- **X API Ingestion**: Real-time streaming of posts.
-- **Gemini Intelligence Layer**: Contextual extraction and sentiment analysis.
-- **Permanent Ledger**: All "decisions" made by the bot are logged to a decentralised storage layer.
+The system follows a reactive, client-side heavy architecture:
+- **Multimodal Gateway**: A unified service that parallelizes text and image generation.
+- **Theming Engine**: A CSS-variable driven system that swaps entire visual identities (fonts, shaders, particles) instantly.
+- **Secure Proxy**: A Vercel-based proxy layer to handle DEV.to API calls while bypassing CORS restrictions.
 
 ---
 
