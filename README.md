@@ -1,6 +1,6 @@
 # 🔱 ForkToPost
 
-![Version](https://img.shields.io/badge/version-v0.1.0-blue)
+![Version](https://img.shields.io/badge/version-v0.2.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -14,16 +14,23 @@ Whether you're struggling to articulate your value proposition or just want to c
 
 ## ✨ Features
 
-- 🤖 **AI-Powered Narrative**: Leverages Gemini-3.1-pro-preview to analyze your repository and generate structured Markdown.
-- 🎨 **Immersive UI Themes**: Four distinct visual experiences to match your project's vibe:
+⚡ Built for the Weekend: Designed specifically to help DEV Challenge participants meet tight deadlines without sacrificing quality.
+
+- 🤖 **AI-Powered Narrative**: Leverages `gemini-3-flash-preview` to analyze your repository and generate structured Markdown.
+- 🎨 **Image Generation**: Create cinematic visual metaphors for your projects using `gemini-3.1-flash-image-preview`.
+- 🧠 **Advanced Writing Toggles**:
+  - **Add Empathy**: Infuse your post with emotional resonance, focusing on the human struggle and the "aha!" moment.
+  - **Architecture Deep-Dive**: Automatically generate a structured technical breakdown of your system.
+- 🎭 **Immersive UI Themes**: Four distinct visual experiences to match your project's vibe:
   - 🌊 **Sea (Abyssal)**: A deep-sea, bioluminescent aesthetic with terminal-inspired elements.
   - 🌳 **Forest (Enchanted)**: A warm, parchment-style design that feels like reading an ancient scroll.
   - ⚡ **Technical (Terminal)**: A sleek, high-contrast dark mode for the minimalists.
   - 💻 **Original (Modern)**: A clean, standard professional interface.
 - 📝 **Dual Modes**:
   - **Custom Fields**: Tailor every detail from target community to specific problems solved.
-  - **Template Mode**: Paste a standard template and let the AI fill in the blanks based on your README.
-- 📋 **One-Click Copy**: Instantly copy your generated post to your clipboard, ready for DEV.to.
+  - **Template Mode**: Paste a standard template and let the AI fill in the blanks. Supports automatic YouTube and Cloud Run embeds using Liquid tags (`{% embed %}`).
+- 📋 **One-Click Copy**: Instantly copy your generated post and preview with a single click.
+- 🛡️ **Attribution**: Every post includes a subtle credit footer: *Generated with ForkToPost*.
 
 ---
 
@@ -31,15 +38,17 @@ Whether you're struggling to articulate your value proposition or just want to c
 
 - **Frontend**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **AI**: [@google/genai](https://www.npmjs.com/package/@google/genai) (Gemini API)
-- [animations]: [Motion](https://motion.dev/)
-- [icons]: [Lucide React](https://lucide.dev/)
+- **AI**: [@google/genai](https://www.npmjs.com/package/@google/genai)
+  - **Text**: `gemini-3-flash-preview`
+  - **Vision/Image**: `gemini-3.1-flash-image-preview`
+- **Animations**: [Motion](https://motion.dev/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
 ---
 
 ## 🏗️ Architecture
 
-For a detailed deep-dive into the system design, data flow, and component breakdown, please refer to our [ARCHITECTURE.md](file:///c:/Users/sf/projects/forktopost/ARCHITECTURE.md).
+For a detailed deep-dive into the system design, data flow, and component breakdown, please refer to our [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ---
 
@@ -66,7 +75,9 @@ For a detailed deep-dive into the system design, data flow, and component breakd
 3. **Configure Environment**:
    Create a `.env` file in the root directory:
    ```env
-   VITE_GEMINI_API_KEY=your_gemini_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
+   MODEL_NAME_TEXT="gemini-3-flash-preview"
+   MODEL_NAME_IMAGE="gemini-3.1-flash-image-preview"
    ```
 
 4. **Start the development server**:

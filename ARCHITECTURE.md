@@ -4,62 +4,83 @@ This document outlines the architectural design and technical decisions of the *
 
 ## 📌 High-Level Overview
 
-ForkToPost is a client-side heavy React application that utilizes Google's Gemini AI to assist developers in creating submission posts for the DEV.to community. The core philosophy is to provide an immersive, themed environment that reduces the cognitive load of technical writing.
+ForkToPost is a client-side heavy React application that utilizes Google's Gemini AI to assist developers in creating submission posts for the DEV.to community. The application provides an immersive, themed environment with multimodal capabilities, generating both text and visual assets.
 
 ## 🗺️ System Design
 
-The application follows a simple unidirectional data flow pattern:
+The application follows a multimodal generation flow:
 
 ```mermaid
 graph TD
     User([User]) -->|Input Project Data| Form[SubmissionForm]
     Form -->|SubmissionData| API[Gemini Service]
-    API -->|Request| Gemini[Google Gemini API]
-    Gemini -->|Markdown Response| API
-    API -->|Prompt Result| Preview[PostPreview]
-    Preview -->|Copy Markdown| Clipboard([Clipboard])
+    
+    subgraph AI Generation
+        API -->|Text Prompt| GeminiText[Gemini 3 Flash]
+        API -->|Vision Prompt| GeminiImage[Gemini 3.1 Flash Image]
+        GeminiText -->|Markdown| Result
+        GeminiImage -->|Base64 Image| Result
+    end
+
+    Result[GenerationResult] --> Preview[PostPreview]
+    Preview -->|Copy Content| Clipboard([Clipboard])
     
     subgraph Themes
         App[App.tsx] -.->|Theme State| CSS[CSS Variables]
         CSS -.->|Apply Styles| UI[React Components]
+        App -.->|Particles| Effects[Motion Effects]
     end
 ```
 
 ## 🏗️ Component Breakdown
 
 ### 1. `App.tsx` (The Orchestrator)
-- Manages the global state: selected theme, loading status, and the generated post.
-- Handles the high-level routing/switching between the form and the preview.
-- Injects theme-specific particles and background effects.
+- Manages global state: theme, loading status, and generated artifacts (text/image).
+- Orchestrates particle effects and background shaders via `motion` and custom CSS.
+- Handles theme persistence in `localStorage`.
 
 ### 2. `SubmissionForm.tsx` (Data Capture)
-- Provides two modes: `custom` (field-based) and `template` (README-based).
-- Collects structured data (Repo Name, Tech Stack, Problem Solved, etc.).
-- Validates inputs before triggering the AI generation.
+- **Dual Modes**: Supports `custom` (field-based) and `template` (README-based).
+- **Advanced Flags**:
+    - `addEmpathy`: Triggers a tone override in the AI prompt for emotional resonance.
+    - `includeArchitecture`: Requests a structured technical deep-dive in the output.
+    - `generateImage`: Enables the parallel image generation flow.
+- **Template Logic**: Automatically wraps YouTube and Cloud Run URLs in Liquid tags (`{% embed %}`).
 
-### 3. `geminiService.ts` (API Integration)
-- Encapsulates the logic for interacting with `@google/genai`.
-- Construct specialized prompts based on the user's input and selected mode.
-- Uses the `gemini-3.1-pro-preview` model for optimal technical writing quality.
+### 3. `geminiService.ts` (Multimodal Integration)
+- Interfaces with `@google/genai` using two specific models:
+    - **Text**: `gemini-3-flash-preview` handles the narrative and layout.
+    - **Image**: `gemini-3.1-flash-image-preview` generates cinematic visual metaphors.
+- **Prompt Engineering**: Dynamically constructs instructions for tone, structure, and scannability.
+- **Attribution**: Appends a project credit footer to every generated post.
 
 ### 4. `PostPreview.tsx` (Presentation)
-- Renders the generated Markdown using `react-markdown` and `remark-gfm`.
-- provides a themed preview that matches the rest of the application.
-- Includes a copy-to-clipboard utility.
+- Renders Markdown via `react-markdown` with GFM support.
+- Displays generated cover images with themed metadata overlays.
+- Provides a themed "Success" interface with clipboard synchronization.
 
 ## 🎨 Theming System
 
-The application uses a CSS Variable based theming system.
-
-- **Storage**: The selected theme is persisted in `localStorage`.
-- **Implementation**: `data-theme` attribute on the `<html>` element.
-- **Styling**: Tailwind CSS variables and custom utility classes in `index.css` respond to the data attribute.
-- **Dynamics**: Theme-specific React components (like particles/glows) are rendered conditionally inside `App.tsx`.
+The system leverages CSS Variables and the `data-theme` attribute.
+- **Visuals**: Themes like `Sea` and `Forest` use custom SVG filters (caustics) and dynamic particle systems.
+- **Typography**: Each theme defines its own font stack (Display, Serif, Mono).
+- **Styling**: Tailwind CSS 4 utility classes react to theme-specific color tokens.
 
 ## 🛠️ Tech Stack Decisions
 
-- **React 19**: Chosen for the latest performance improvements and experimental features.
-- **TypeScript**: Ensures type safety across the application, especially for complicated AI prompt data structures.
-- **Tailwind CSS 4**: Utilized for its modernized JIT engine and fluid design system capabilities.
-- **Motion**: Provides the smooth micro-animations that make the immersive themes feel "alive".
-- **Gemini AI**: Selected for its superior reasoning in technical writing and ease of integration via the `@google/genai` SDK.
+- **React 19**: Chosen for high-performance rendering and modern hooks.
+- **Google Gemini 3 (Flash)**: Selected for lightning-fast text generation and cost efficiency.
+- **Google Gemini 3.1 (Flash Image)**: Provides high-quality visual metaphors for software projects.
+- **Motion**: Powers micro-animations and immersive background interactions.
+- **Tailwind CSS 4**: Modernized JIT styling system.
+
+## ⚙️ Environment Configuration
+
+The following variables are required for full functionality:
+
+- `GEMINI_API_KEY`: Your Google AI Studio API Key.
+- `MODEL_NAME_TEXT`: Set to `gemini-3-flash-preview`.
+- `MODEL_NAME_IMAGE`: Set to `gemini-3.1-flash-image-preview`.
+- `APP_URL`: The deployment URL for linking purposes.
+
+> Never commit your .env file to version control.
