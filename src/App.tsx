@@ -6,7 +6,7 @@ import { Sparkles, Waves, Anchor, Lightbulb, Zap, Leaf, Flower, Wind, Monitor, P
 import { motion, AnimatePresence } from 'motion/react';
 import { MOCK_POST_CONTENT, MOCK_IMAGE_URL } from './services/mockData';
 import { getDevToUserProfile } from './services/devToService';
-import { User as UserIcon, Globe, AlertCircle, Loader2 } from 'lucide-react';
+import { User as UserIcon, Globe, AlertCircle, Loader2, LogOut } from 'lucide-react';
 
 type Theme = 'original' | 'tech' | 'forest' | 'sea';
 
@@ -261,11 +261,23 @@ export default function App() {
                       <p className="font-bold text-white text-sm">@{devToProfile.username}</p>
                       <p className="text-[10px] text-muted uppercase tracking-widest">{devToProfile.name || 'Connected Account'}</p>
                     </div>
-                    <div className="ml-auto">
+                    <div className="ml-auto flex items-center gap-3">
                       <div className="flex flex-col items-center gap-1">
                         <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
                         <span className="text-[8px] text-emerald-500/60 uppercase font-bold">Live</span>
                       </div>
+                      <button
+                        onClick={() => {
+                          setDevToApiKey('');
+                          setDevToProfile(null);
+                          setDevToError(null);
+                          localStorage.removeItem('devto-api-key');
+                        }}
+                        className="p-2 hover:bg-white/10 rounded-lg text-muted hover:text-red-400 transition-colors"
+                        title="Disconnect Profile"
+                      >
+                        <LogOut className="h-4 w-4" />
+                      </button>
                     </div>
                   </motion.div>
                 )}
