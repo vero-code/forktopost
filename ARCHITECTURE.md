@@ -12,7 +12,8 @@ The application follows a multimodal generation flow:
 
 ```mermaid
 graph TD
-    User([User]) -->|Input Project Data| Form[SubmissionForm]
+    User([User]) -->|GitHub URL| GH[GitHub Service]
+    GH -->|Repo Info & README| Form[SubmissionForm]
     Form -->|SubmissionData| API[Gemini Service]
     
     subgraph AI Generation
@@ -23,12 +24,14 @@ graph TD
     end
 
     Result[GenerationResult] --> Preview[PostPreview]
-    Preview -->|Copy Content| Clipboard([Clipboard])
+    Preview -->|Stable Layout| Sidebar[Action Sidebar]
+    Sidebar -->|Publish Draft| DevTo[DEV.to Service]
+    Sidebar -->|Copy| Clipboard([Clipboard])
     
     subgraph Themes
         App[App.tsx] -.->|Theme State| CSS[CSS Variables]
         CSS -.->|Apply Styles| UI[React Components]
-        App -.->|Particles| Effects[Motion Effects]
+        App -.->|3-Column Grid| Layout[Stable Workspace]
     end
 ```
 
@@ -41,6 +44,7 @@ graph TD
 
 ### 2. `SubmissionForm.tsx` (Data Capture)
 - **Dual Modes**: Supports `custom` (field-based) and `template` (README-based).
+- **GitHub Linker**: Features an automated check that fetches basic repo stats and README content directly from GitHub API.
 - **Advanced Flags**:
     - `addEmpathy`: Triggers a tone override in the AI prompt for emotional resonance.
     - `includeArchitecture`: Requests a structured technical deep-dive in the output.
@@ -57,14 +61,22 @@ graph TD
 ### 4. `PostPreview.tsx` (Presentation)
 - Renders Markdown via `react-markdown` with GFM support.
 - Displays generated cover images with themed metadata overlays.
-- Provides a themed "Success" interface with clipboard synchronization.
+- **Integrated Actions**: Hosts the "Copy" and "Publish" triggers in a dedicated sidebar to maintain layout stability.
+- **DEV.to Bridge**: Handles the API key input, fetches real-time **user profile data** (avatar/username) for verification, and prepares metadata for direct publishing.
 
 ## 🎨 Theming System
 
-The system leverages CSS Variables and the `data-theme` attribute.
+The system leverages CSS Variables and the `data-theme` attribute for real-time visual shifts.
 - **Visuals**: Themes like `Sea` and `Forest` use custom SVG filters (caustics) and dynamic particle systems.
 - **Typography**: Each theme defines its own font stack (Display, Serif, Mono).
-- **Styling**: Tailwind CSS 4 utility classes react to theme-specific color tokens.
+- **Styling**: Tailwind CSS 4 utility classes react to theme-specific color tokens (e.g., `text-biolume`, `bg-parchment`).
+
+## 🔌 Services & Integration
+
+### 5. `Services/API` (External Bridges)
+- **GitHubService**: Automated retrieval of repository metadata and README data for zero-effort form filling.
+- **DevToService**: Integration with DEV.to API via Vite proxy for profile verification and article drafting.
+- **GeminiService**: Central gateway for multimodal AI generation (Text Narrative + Visual Metaphor).
 
 ## 🛠️ Tech Stack Decisions
 

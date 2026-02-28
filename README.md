@@ -1,6 +1,6 @@
 # 🔱 ForkToPost
 
-![Version](https://img.shields.io/badge/version-v0.2.0-blue)
+![Version](https://img.shields.io/badge/version-v0.3.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -17,7 +17,10 @@ Whether you're struggling to articulate your value proposition or just want to c
 ⚡ Built for the Weekend: Designed specifically to help DEV Challenge participants meet tight deadlines without sacrificing quality.
 
 - 🤖 **AI-Powered Narrative**: Leverages `gemini-3-flash-preview` to analyze your repository and generate structured Markdown.
+- 🔗 **GitHub Integration**: Automatically fetch project names and README content by pasting a GitHub URL.
 - 🎨 **Image Generation**: Create cinematic visual metaphors for your projects using `gemini-3.1-flash-image-preview`.
+- 🚀 **Direct Publish**: Publish your generated post directly as a **draft to DEV.to** with one click.
+- 👤 **Profile Verification**: Enter your API key to instantly see your DEV.to avatar and username, ensuring a secure and correct connection.
 - 🧠 **Advanced Writing Toggles**:
   - **Add Empathy**: Infuse your post with emotional resonance, focusing on the human struggle and the "aha!" moment.
   - **Architecture Deep-Dive**: Automatically generate a structured technical breakdown of your system.
@@ -29,6 +32,7 @@ Whether you're struggling to articulate your value proposition or just want to c
 - 📝 **Dual Modes**:
   - **Custom Fields**: Tailor every detail from target community to specific problems solved.
   - **Template Mode**: Paste a standard template and let the AI fill in the blanks. Supports automatic YouTube and Cloud Run embeds using Liquid tags (`{% embed %}`).
+- 📋 **Stable Workspace**: A side-by-side layout that keeps your post preview centered while providing tools (copy, publish, etc.) in a stable right sidebar.
 - 📋 **One-Click Copy**: Instantly copy your generated post and preview with a single click.
 - 🛡️ **Attribution**: Every post includes a subtle credit footer: *Generated with ForkToPost*.
 
@@ -58,6 +62,7 @@ For a detailed deep-dive into the system design, data flow, and component breakd
 
 - [Node.js](https://nodejs.org/) (v18+)
 - A Google AI (Gemini) API Key. Get one at [Google AI Studio](https://aistudio.google.com/).
+- A DEV.to API Key (Optional, for direct publishing). Get one at [dev.to Settings > Extensions](https://dev.to/settings/extensions).
 
 ### Installation
 
