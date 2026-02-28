@@ -594,7 +594,7 @@ export default function App() {
 
                     {theme === 'sea' && (
                       <div className="text-center p-6 border border-biolume/10 bg-biolume/5">
-                        <div className="flex items-center justify-center gap-2 text-biolume/40 font-display tracking-[0.2em] text-[10px] uppercase">
+                        <div className="flex items-center justify-center gap-2 text-biolume/70 font-display tracking-[0.2em] text-[10px] uppercase">
                           <div className="h-1.5 w-1.5 rounded-full bg-biolume animate-ping" />
                           <span>Scanning_Deep_Currents...</span>
                         </div>
@@ -631,7 +631,7 @@ export default function App() {
         </main>
 
         <footer className={`mt-24 pt-12 border-t text-center uppercase tracking-[0.3em] text-[10px] ${
-          theme === 'sea' ? 'border-biolume/10 text-biolume/40 font-display' :
+          theme === 'sea' ? 'border-biolume/20 text-biolume/70 font-display' :
           theme === 'forest' ? 'border-[#f4e4bc]/20 text-[#f4e4bc]/60 font-serif italic' :
           'border-white/10 text-muted font-mono'
         }`}>

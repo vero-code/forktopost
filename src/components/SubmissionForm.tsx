@@ -576,7 +576,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
             template: DEFAULT_TEMPLATE,
           })}
           className={`md:w-1/3 uppercase tracking-widest text-sm transition-colors ${
-            theme === 'sea' ? 'font-display text-[10px] text-biolume/40 hover:text-biolume' :
+            theme === 'sea' ? 'font-display text-[10px] text-biolume/70 hover:text-biolume' :
             theme === 'forest' ? 'font-serif italic text-[#8b4513] hover:text-[#4a5d23]' :
             theme === 'tech' ? 'font-mono text-[#8B949E] hover:text-[#FF5C00]' :
             'font-sans text-slate-500 hover:text-white'

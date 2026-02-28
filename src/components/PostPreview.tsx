@@ -301,7 +301,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, 
       </motion.div>
 
       <div className={`mt-8 flex justify-between items-center uppercase tracking-widest text-[10px] ${
-        theme === 'sea' ? 'font-display text-biolume/40' :
+        theme === 'sea' ? 'font-display text-biolume/70' :
         theme === 'forest' ? 'font-serif text-[#4a5d23]/60 italic' :
         'text-muted font-mono'
       }`}>
