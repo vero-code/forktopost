@@ -4,22 +4,26 @@ import remarkGfm from 'remark-gfm';
 import { Copy, Check, ArrowLeft, Anchor, Sparkles, ScrollText, FileText, Zap, Monitor, Share2, Loader2, User, Globe, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { publishToDevTo, getDevToUserProfile } from '../services/devToService';
+import { useEffect } from 'react';
 
 interface PostPreviewProps {
   content: string;
   imageUrl?: string;
   onBack: () => void;
   theme: 'original' | 'tech' | 'forest' | 'sea';
+  apiKey: string;
+  userProfile: any;
+  onApiKeyChange: (key: string) => void;
 }
 
-export default function PostPreview({ content, imageUrl, onBack, theme }: PostPreviewProps) {
+export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, userProfile, onApiKeyChange }: PostPreviewProps) {
   const [copied, setCopied] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem('devto-api-key') || '');
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishStatus, setPublishStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const [userProfile, setUserProfile] = useState<any>(null);
+
+  // Global API key state is handled in App.tsx
 
   const handleCopy = () => {
     navigator.clipboard.writeText(content);
@@ -176,8 +180,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
                       type="password"
                       value={apiKey}
                       onChange={(e) => {
-                        setApiKey(e.target.value);
-                        localStorage.setItem('devto-api-key', e.target.value);
+                        onApiKeyChange(e.target.value);
                       }}
                       placeholder="forem_..."
                       className={`w-full p-3 bg-black/20 border transition-all text-sm ${
@@ -187,9 +190,32 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
                         'border-slate-700 focus:border-indigo-500 rounded-lg text-white'
                       }`}
                     />
-                    <p className="mt-2 text-[10px] text-muted italic">
-                      Get yours at <a href="https://dev.to/settings/extensions" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">dev.to Settings</a>
-                    </p>
+                    <div className="mt-2 flex items-center justify-between">
+                      <p className="text-[10px] text-muted italic">
+                        Get yours at <a href="https://dev.to/settings/extensions" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">dev.to Settings</a>
+                      </p>
+                      
+                      {userProfile && (
+                        <motion.div 
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className="flex items-center gap-2"
+                        >
+                          <img 
+                            src={userProfile.profile_image} 
+                            alt={userProfile.username} 
+                            className="h-4 w-4 rounded-full border border-white/20"
+                          />
+                          <span className={`text-[10px] font-bold ${
+                            theme === 'sea' ? 'text-biolume' :
+                            theme === 'forest' ? 'text-[#4a5d23]' :
+                            'text-[#FF5C00]'
+                          }`}>
+                            @{userProfile.username}
+                          </span>
+                        </motion.div>
+                      )}
+                    </div>
                   </div>
 
                   {errorMessage && (
