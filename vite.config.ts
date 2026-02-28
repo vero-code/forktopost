@@ -6,6 +6,15 @@ import {defineConfig, loadEnv} from 'vite';
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
   return {
+    server: {
+      proxy: {
+        '/devto-api': {
+          target: 'https://dev.to/api',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/devto-api/, ''),
+        },
+      },
+    },
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
