@@ -429,10 +429,10 @@ export default function App() {
                   'border-white/10'
                 }`}>
                   <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'}`} />
-                  <h2 className={`text-2xl font-bold uppercase ${
-                    theme === 'sea' ? 'font-display text-pearl tracking-[0.15em]' :
+                  <h2 className={`text-2xl font-bold ${
+                    theme === 'sea' ? 'font-display text-pearl tracking-[0.15em] uppercase' :
                     theme === 'forest' ? 'font-serif text-[#4a3728] italic' :
-                    theme === 'tech' ? 'font-mono text-white' :
+                    theme === 'tech' ? 'font-mono text-white uppercase' :
                     'font-sans text-white'
                   }`}>
                     {theme === 'sea' ? 'Abyssal_Initialization' :

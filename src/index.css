@@ -149,6 +149,18 @@ a, button, label, input[type="checkbox"], input[type="radio"], [role="button"] {
   50% { transform: translate(30px, -50px) scale(1.1); opacity: 0.6; }
 }
 
+/* Golden Seed Button */
+.golden-seed {
+  background: radial-gradient(circle at 30% 30%, #fff9c4, #ffd700);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset -2px -2px 5px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.golden-seed:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
 /* Caustics */
 .water-caustics {
   position: fixed;

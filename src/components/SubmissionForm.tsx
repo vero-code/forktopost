@@ -151,24 +151,28 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
         <button
           type="button"
           onClick={() => setFormData(p => ({ ...p, mode: 'custom' }))}
-          className={`px-4 py-2 rounded-md font-bold transition-all text-xs uppercase tracking-widest ${
+          className={`px-6 py-2.5 rounded-md font-bold transition-all tracking-widest ${
+            theme === 'forest' ? 'font-serif italic text-lg' : 'text-xs uppercase'
+          } ${
             formData.mode === 'custom' 
               ? (theme === 'sea' ? 'bg-biolume text-black' : theme === 'forest' ? 'bg-[#4a5d23] text-white' : 'bg-brand text-white')
               : 'text-muted hover:text-white'
           }`}
         >
-          Custom_Fields
+          {theme === 'forest' ? 'Seeds of Creation' : 'Custom_Fields'}
         </button>
         <button
           type="button"
           onClick={() => setFormData(p => ({ ...p, mode: 'template' }))}
-          className={`px-4 py-2 rounded-md font-bold transition-all text-xs uppercase tracking-widest ${
+          className={`px-6 py-2.5 rounded-md font-bold transition-all tracking-widest ${
+            theme === 'forest' ? 'font-serif italic text-lg' : 'text-xs uppercase'
+          } ${
             formData.mode === 'template' 
               ? (theme === 'sea' ? 'bg-biolume text-black' : theme === 'forest' ? 'bg-[#4a5d23] text-white' : 'bg-brand text-white')
               : 'text-muted hover:text-white'
           }`}
         >
-          Template_Mode
+          {theme === 'forest' ? 'Ancient Scrolls' : 'Template_Mode'}
         </button>
       </div>
 
@@ -430,7 +434,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               onChange={handleChange}
               required
               rows={12}
-              className={`${inputClass} resize-none font-mono text-xs`}
+              className={`${inputClass} resize-none`}
               placeholder="Enter your Markdown template..."
             />
           </div>
@@ -537,20 +541,25 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
         <button
           type="submit"
           disabled={isLoading || repoStatus === 'loading' || repoStatus === 'error'}
-          className={`md:w-2/3 font-bold py-4 md:py-5 px-4 md:px-8 uppercase tracking-wider md:tracking-[0.2em] transition-all disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed flex items-center justify-center gap-4 text-base md:text-lg ${
+          className={`md:w-2/3 font-bold py-4 md:py-5 px-4 md:px-8 uppercase tracking-wider md:tracking-[0.2em] transition-all disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed flex items-center justify-center gap-4 text-base md:text-lg relative overflow-hidden group ${
             theme === 'sea' ? 'pearl-button rounded-none font-display' :
             theme === 'forest' ? 'golden-seed rounded-full font-serif text-[#4a3728]' :
             theme === 'tech' ? 'bg-[#FF5C00] hover:bg-[#FF7A33] text-black font-mono' :
             'bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-sans'
           }`}
         >
+          {theme === 'forest' && (
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none" />
+          )}
           {isLoading ? (
-            <>
+            <div className="relative z-10 flex items-center gap-4">
               <Loader2 className="animate-spin h-5 w-5" />
-              {theme === 'sea' ? 'TRANSMITTING...' : theme === 'forest' ? 'Weaving Magic...' : 'Processing...'}
-            </>
+              {theme === 'sea' ? 'TRANSMITTING...' : theme === 'forest' ? 'Whispering...' : 'Processing...'}
+            </div>
           ) : (
-            theme === 'sea' ? 'INITIATE_PEARL' : theme === 'forest' ? 'Plant the Seed' : 'Execute_Generation'
+            <span className="relative z-10">
+              {theme === 'sea' ? 'INITIATE_PEARL' : theme === 'forest' ? 'Plant the Seed' : 'Execute_Generation'}
+            </span>
           )}
         </button>
       </div>
