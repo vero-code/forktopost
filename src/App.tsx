@@ -125,25 +125,25 @@ export default function App() {
                theme === 'tech' ? <Zap className="h-16 w-16 text-[#FF5C00] animate-pulse" /> :
                <Monitor className="h-16 w-16 text-indigo-500 animate-pulse" />}
               
-              {theme === 'forest' && <Flower className="h-6 w-6 text-pink-400 absolute -top-2 -right-2" />}
+              {theme === 'forest' && <Flower className="h-6 w-6 text-[#f4e4bc] absolute -top-2 -right-2" />}
               {theme === 'sea' && <Zap className="h-8 w-8 text-cyan-300 absolute -top-2 -right-2 blur-[1px]" />}
             </div>
           </motion.div>
           
-          <h1 className={`text-7xl font-bold tracking-[0.2em] mb-4 uppercase ${
-            theme === 'sea' ? 'font-display text-pearl drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' :
-            theme === 'forest' ? 'font-serif text-[#f4e4bc] drop-shadow-lg italic' :
-            theme === 'tech' ? 'font-mono text-white' :
-            'font-sans text-white'
+          <h1 className={`mb-4 ${
+            theme === 'sea' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-display text-pearl drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' :
+            theme === 'forest' ? 'text-8xl font-serif text-[#f4e4bc] drop-shadow-lg' :
+            theme === 'tech' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-mono text-white' :
+            'text-7xl font-bold tracking-[0.2em] uppercase font-sans text-white'
           }`}>
             Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-leaf' : theme === 'tech' ? 'text-[#FF5C00]' : 'text-indigo-500'}>To</span>Post
           </h1>
           
-          <p className={`text-xl max-w-2xl mx-auto uppercase italic ${
-            theme === 'sea' ? 'text-biolume/60 font-quicksand tracking-widest' :
-            theme === 'forest' ? 'text-[#f4e4bc]/80 font-serif' :
-            theme === 'tech' ? 'text-[#8B949E] font-mono' :
-            'text-slate-400 font-sans'
+          <p className={`text-xl max-w-2xl mx-auto ${
+            theme === 'sea' ? 'uppercase italic text-biolume/60 font-quicksand tracking-widest' :
+            theme === 'forest' ? 'text-[#f4e4bc]/90 font-serif italic' :
+            theme === 'tech' ? 'uppercase italic text-[#8B949E] font-mono' :
+            'uppercase italic text-slate-400 font-sans'
           }`}>
             {theme === 'sea' ? 'Deep-sea technical alchemy. Transform your code in the bioluminescent abyss.' :
              theme === 'forest' ? 'Where code blossoms into stories. Whisper your repository\'s secrets to the forest.' :
@@ -152,129 +152,69 @@ export default function App() {
           </p>
         </header>
 
-        <main className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-8">
-            <AnimatePresence mode="wait">
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className={`px-6 py-4 mb-8 backdrop-blur-md border ${
-                    theme === 'sea' ? 'bg-cyan-950/30 border-cyan-500/50 text-cyan-100 font-display tracking-widest text-sm' :
-                    theme === 'forest' ? 'bg-red-900/30 border-red-500/50 text-red-100 font-serif italic' :
-                    'bg-red-500/10 border-red-500/50 text-red-500 font-mono text-xs'
-                  }`}
-                >
-                  {theme === 'sea' ? <Anchor className="h-5 w-5 mr-3 inline" /> :
-                   theme === 'forest' ? <Wind className="h-5 w-5 mr-3 inline" /> :
-                   <Zap className="h-5 w-5 mr-3 inline" />}
-                  {error}
-                </motion.div>
-              )}
+        <main className="max-w-4xl mx-auto">
+          <AnimatePresence mode="wait">
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className={`px-6 py-4 mb-8 backdrop-blur-md border ${
+                  theme === 'sea' ? 'bg-cyan-950/30 border-cyan-500/50 text-cyan-100 font-display tracking-widest text-sm' :
+                  theme === 'forest' ? 'bg-red-900/30 border-red-500/50 text-red-100 font-serif italic' :
+                  'bg-red-500/10 border-red-500/50 text-red-500 font-mono text-xs'
+                }`}
+              >
+                {theme === 'sea' ? <Anchor className="h-5 w-5 mr-3 inline" /> :
+                 theme === 'forest' ? <Wind className="h-5 w-5 mr-3 inline" /> :
+                 <Zap className="h-5 w-5 mr-3 inline" />}
+                {error}
+              </motion.div>
+            )}
 
-              {generatedPost ? (
-                <motion.div
-                  key="preview"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                >
-                  <PostPreview content={generatedPost} imageUrl={generatedImage || undefined} onBack={handleBack} theme={theme} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="form"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  className={`p-8 md:p-12 ${
-                    theme === 'sea' ? 'stone-card border-t-4 border-biolume' :
-                    theme === 'forest' ? 'parchment-card' :
-                    theme === 'tech' ? 'bg-[#0F1115] border border-[#2D3139]' :
-                    'bg-slate-800/50 border border-slate-700 rounded-2xl'
-                  }`}
-                >
-                  <div className={`flex items-center gap-3 mb-10 border-b pb-6 ${
-                    theme === 'sea' ? 'border-biolume/20' :
-                    theme === 'forest' ? 'border-[#8b4513]/20' :
-                    'border-white/10'
+            {generatedPost ? (
+              <motion.div
+                key="preview"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+              >
+                <PostPreview content={generatedPost} imageUrl={generatedImage || undefined} onBack={handleBack} theme={theme} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                className={`p-8 md:p-12 ${
+                  theme === 'sea' ? 'stone-card border-t-4 border-biolume' :
+                  theme === 'forest' ? 'parchment-card' :
+                  theme === 'tech' ? 'bg-[#0F1115] border border-[#2D3139]' :
+                  'bg-slate-800/50 border border-slate-700 rounded-2xl'
+                }`}
+              >
+                <div className={`flex items-center gap-3 mb-10 border-b pb-6 ${
+                  theme === 'sea' ? 'border-biolume/20' :
+                  theme === 'forest' ? 'border-[#8b4513]/20' :
+                  'border-white/10'
+                }`}>
+                  <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'}`} />
+                  <h2 className={`text-2xl font-bold uppercase ${
+                    theme === 'sea' ? 'font-display text-pearl tracking-[0.15em]' :
+                    theme === 'forest' ? 'font-serif text-[#4a3728] italic' :
+                    theme === 'tech' ? 'font-mono text-white' :
+                    'font-sans text-white'
                   }`}>
-                    <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'}`} />
-                    <h2 className={`text-2xl font-bold uppercase ${
-                      theme === 'sea' ? 'font-display text-pearl tracking-[0.15em]' :
-                      theme === 'forest' ? 'font-serif text-[#4a3728] italic' :
-                      theme === 'tech' ? 'font-mono text-white' :
-                      'font-sans text-white'
-                    }`}>
-                      {theme === 'sea' ? 'Abyssal_Initialization' :
-                       theme === 'forest' ? 'Ancient Scroll of Creation' :
-                       'Generation_Protocol'}
-                    </h2>
-                  </div>
-                  <SubmissionForm onSubmit={handleGenerate} isLoading={isLoading} theme={theme} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          <aside className="lg:col-span-4 space-y-8">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 }}
-              className={`p-8 border-l-4 ${
-                theme === 'sea' ? 'stone-card border-teal-glow' :
-                theme === 'forest' ? 'parchment-card border-[#4a5d23]' :
-                theme === 'tech' ? 'bg-[#0F1115] border-[#FF5C00]' :
-                'bg-slate-800/50 border-indigo-500 rounded-r-2xl'
-              }`}
-            >
-              <h3 className={`text-lg font-bold mb-6 flex items-center uppercase tracking-widest ${
-                theme === 'sea' ? 'font-display text-pearl' :
-                theme === 'forest' ? 'font-serif text-[#4a3728] italic' :
-                theme === 'tech' ? 'font-mono text-white' :
-                'font-sans text-white'
-              }`}>
-                <Lightbulb className={`h-5 w-5 mr-2 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'}`} />
-                {theme === 'sea' ? 'Abyss_Echoes' : theme === 'forest' ? 'Forest Wisdom' : 'System_Tips'}
-              </h3>
-              <div className={`space-y-6 text-sm leading-relaxed tracking-wide ${
-                theme === 'sea' ? 'font-quicksand text-slate-400' :
-                theme === 'forest' ? 'font-serif text-[#5d4a3e] italic text-lg' :
-                theme === 'tech' ? 'font-mono text-[#8B949E]' :
-                'font-sans text-slate-400'
-              }`}>
-                <p>
-                  <span className={`${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'} font-bold`}>I.</span> 
-                  {theme === 'sea' ? ' Etch the core purpose into the stone.' : ' Whisper the roots of your story.'}
-                </p>
-                <p>
-                  <span className={`${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'} font-bold`}>II.</span> 
-                  {theme === 'sea' ? ' Call to the kindred explorers.' : ' Seek the kindred spirits of the woods.'}
-                </p>
-                <p>
-                  <span className={`${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'} font-bold`}>III.</span> 
-                  {theme === 'sea' ? ' Let the README be the trail.' : ' Let the README be your roots.'}
-                </p>
-              </div>
-            </motion.div>
-
-            <div className={`text-center p-6 ${
-              theme === 'sea' ? 'border border-biolume/10 bg-biolume/5' :
-              theme === 'forest' ? 'border-2 border-dashed border-[#f4e4bc]/30 rounded-full' :
-              'border border-white/5 bg-white/5'
-            }`}>
-              <div className={`flex items-center justify-center gap-2 uppercase tracking-[0.2em] text-[10px] ${
-                theme === 'sea' ? 'text-biolume/40 font-display' :
-                theme === 'forest' ? 'text-[#f4e4bc]/60 font-serif italic' :
-                'text-muted font-mono'
-              }`}>
-                <div className={`h-1.5 w-1.5 rounded-full animate-ping ${theme === 'sea' ? 'bg-biolume' : theme === 'forest' ? 'bg-leaf' : 'bg-brand'}`} />
-                <span>{theme === 'sea' ? 'Scanning_Deep_Currents...' : theme === 'forest' ? 'The forest is listening...' : 'System_Monitoring_Active...'}</span>
-              </div>
-            </div>
-          </aside>
+                    {theme === 'sea' ? 'Abyssal_Initialization' :
+                     theme === 'forest' ? 'Ancient Scroll of Creation' :
+                     'Generation_Protocol'}
+                  </h2>
+                </div>
+                <SubmissionForm onSubmit={handleGenerate} isLoading={isLoading} theme={theme} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </main>
 
         <footer className={`mt-24 pt-12 border-t text-center uppercase tracking-[0.3em] text-[10px] ${
@@ -283,6 +223,9 @@ export default function App() {
           'border-white/10 text-muted font-mono'
         }`}>
           <p>© 2026 ForkToPost // {theme === 'sea' ? 'Submerged in the Abyss' : theme === 'forest' ? 'Woven with Magic' : 'Technical Protocol Active'}</p>
+          <p className="mt-4">
+            Made by <a href="https://github.com/vero-code" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline underline-offset-4 cursor-pointer">vero-code</a>
+          </p>
         </footer>
       </div>
     </div>

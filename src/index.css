@@ -61,6 +61,10 @@ body {
   color: var(--text);
 }
 
+a, button, label, input[type="checkbox"], input[type="radio"], [role="button"] {
+  cursor: pointer;
+}
+
 /* --- THEME SPECIFIC STYLES --- */
 
 /* Tech Grid */
