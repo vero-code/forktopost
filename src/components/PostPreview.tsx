@@ -358,6 +358,7 @@ ${finalImageUrl ? `cover_image: ${finalImageUrl}` : ''}
           <Sparkles className="h-3 w-3" />
           <span>{theme === 'sea' ? 'ABYSS_SIG' : theme === 'forest' ? 'Magic Signature' : 'Checksum'}: {Math.random().toString(36).substring(7).toUpperCase()}</span>
         </div>
+        <span className="px-4 text-center hidden sm:block">AI-generated draft. Human review recommended.</span>
         <span>{theme === 'sea' ? 'Submerged_In_The_Void' : theme === 'forest' ? 'Woven in the Ancient Woods' : 'UTF-8_Encoded'}</span>
       </div>
     </div>
