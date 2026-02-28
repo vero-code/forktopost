@@ -56,7 +56,6 @@ export async function fetchReadme(owner: string, repo: string): Promise<string |
       return null;
     }
     const content = await response.text();
-    console.log('Successfully fetched README, length:', content.length);
     return content;
   } catch (error) {
     console.error('Error fetching README:', error);

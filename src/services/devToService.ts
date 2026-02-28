@@ -5,10 +5,20 @@ export interface DevToArticle {
   body_markdown: string;
   published: boolean;
   main_image?: string;
+  cover_image?: string;
   tags?: string[];
+  description?: string;
 }
 
 export async function publishToDevTo(apiKey: string, article: DevToArticle) {
+  // console.log("Publishing to DEV.to with metadata:", { 
+  //   title: article.title, 
+  //   tags: article.tags, 
+  //   main_image: article.main_image,
+  //   cover_image: article.cover_image,
+  //   body_length: article.body_markdown?.length
+  // });
+
   try {
     const response = await fetch(`${DEV_TO_API_BASE}/articles`, {
       method: 'POST',
@@ -21,12 +31,15 @@ export async function publishToDevTo(apiKey: string, article: DevToArticle) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to publish to DEV.to');
+      console.error("DEV.to API error response:", response.status, errorData);
+      throw new Error(errorData.error || `Failed to publish to DEV.to (Status: ${response.status})`);
     }
 
-    return await response.json();
+    const result = await response.json();
+    // console.log("DEV.to publication successful! Article URL:", result.url);
+    return result;
   } catch (error) {
-    console.error('Error publishing to DEV.to:', error);
+    console.error('Error publishing to DEV.to (catch block):', error);
     throw error;
   }
 }

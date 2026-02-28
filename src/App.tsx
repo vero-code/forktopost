@@ -309,9 +309,11 @@ export default function App() {
                       <button
                         onClick={() => {
                           setDevToApiKey('');
+                          setImgbbApiKey('');
                           setDevToProfile(null);
                           setDevToError(null);
                           localStorage.removeItem('devto-api-key');
+                          localStorage.removeItem('imgbb-api-key');
                         }}
                         className="p-2 hover:bg-white/10 rounded-lg text-muted hover:text-red-400 transition-colors"
                         title="Disconnect Profile"
@@ -349,7 +351,7 @@ export default function App() {
                       'border-white/10 text-muted hover:bg-white/5'
                     } disabled:opacity-30`}
                   >
-                    {isVerifying ? 'Verifying...' : 'Verify Key'}
+                    {isVerifying ? 'Verifying...' : 'Verify Keys'}
                   </button>
                   <button
                     onClick={() => setShowDevToSettings(false)}

@@ -208,6 +208,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 {theme === 'sea' ? '01_Artifact_Identity' : theme === 'forest' ? 'The Repository\'s Name' : '01_Repo_Name'}
               </label>
               <input
+                key="custom-repo-name"
                 type="text"
                 id="repoName"
                 name="repoName"
@@ -216,6 +217,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 required
                 className={inputClass}
                 placeholder={theme === 'sea' ? 'NAME_OF_THE_SUBMERGED' : theme === 'forest' ? 'What is it called?' : 'e.g., awesome-project'}
+                autoComplete="off"
               />
             </div>
             <div className="relative">
@@ -224,6 +226,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 {theme === 'sea' ? '02_Elemental_Composition' : theme === 'forest' ? 'The Loom of Tech' : '02_Tech_Stack'}
               </label>
               <input
+                key="custom-tech-stack"
                 type="text"
                 id="techStack"
                 name="techStack"
@@ -232,6 +235,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 required
                 className={inputClass}
                 placeholder={theme === 'sea' ? 'REACT_GEMINI_ABYSS' : theme === 'forest' ? 'React, Gemini, Magic...' : 'e.g., React, TypeScript'}
+                autoComplete="off"
               />
             </div>
           </div>
@@ -261,6 +265,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               </label>
               <div className="relative group">
                 <input
+                  key="custom-project-link"
                   type="url"
                   id="projectLink"
                   name="projectLink"
@@ -269,6 +274,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                   onBlur={(e) => handleCheckRepo(e.target.value)}
                   className={`${inputClass} pr-14`}
                   placeholder="https://github.com/..."
+                  autoComplete="off"
                 />
                 <div className="absolute right-2 top-1/2 -translate-y-1/2">
                   {repoStatus === 'success' && (
@@ -299,6 +305,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 {theme === 'sea' ? '04_Visual_Transmission' : theme === 'forest' ? 'A Window into the World' : '04_Demo_URL'}
               </label>
               <input
+                key="custom-demo-link"
                 type="url"
                 id="demoLink"
                 name="demoLink"
@@ -306,6 +313,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 onChange={handleChange}
                 className={inputClass}
                 placeholder="https://..."
+                autoComplete="off"
               />
             </div>
           </div>
@@ -316,6 +324,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               {theme === 'sea' ? '05_Kindred_Explorers' : theme === 'forest' ? 'The Kindred Spirits' : '05_Target_Community'}
             </label>
             <input
+              key="custom-target-community"
               type="text"
               id="targetCommunity"
               name="targetCommunity"
@@ -324,6 +333,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               required
               className={inputClass}
               placeholder={theme === 'sea' ? 'WHO_BRAVES_THESE_WATERS?' : theme === 'forest' ? 'Who will wander these woods?' : 'e.g., Developers'}
+              autoComplete="off"
             />
           </div>
 
@@ -333,6 +343,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               {theme === 'sea' ? '06_Artifact_History' : theme === 'forest' ? 'The Roots (README)' : '06_Context'}
             </label>
             <textarea
+              key="custom-summary"
               id="summary"
               name="summary"
               value={formData.summary}
@@ -341,6 +352,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               rows={5}
               className={`${inputClass} resize-none ${fetchSuccess ? 'ring-2 ring-brand ring-offset-2 ring-offset-black' : ''} transition-all duration-500`}
               placeholder={theme === 'sea' ? 'ETCH_THE_STORY_OF_ITS_ORIGIN...' : theme === 'forest' ? 'Tell the story of its birth...' : 'Paste README content...'}
+              autoComplete="off"
             />
           </div>
 
@@ -386,6 +398,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               </label>
             <div className="relative group">
               <input
+                key="template-project-link"
                 type="url"
                 id="projectLink"
                 name="projectLink"
@@ -395,6 +408,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 required
                 className={`${inputClass} pr-10`}
                 placeholder="https://github.com/..."
+                autoComplete="off"
               />
               <div className="absolute right-2 top-1/2 -translate-y-1/2">
                 {repoStatus === 'success' && (
@@ -427,6 +441,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 {theme === 'sea' ? '02_Visual_Transmission' : theme === 'forest' ? 'The Moving Image' : '02_YouTube_URL'}
               </label>
               <input
+                key="template-youtube-url"
                 type="url"
                 id="youtubeUrl"
                 name="youtubeUrl"
@@ -434,6 +449,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 onChange={handleChange}
                 className={inputClass}
                 placeholder="https://youtu.be/..."
+                autoComplete="off"
               />
             </div>
             <div className="relative">
@@ -442,6 +458,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 {theme === 'sea' ? '03_Cloud_Manifestation' : theme === 'forest' ? 'The Ethereal Link' : '03_Cloud_Run_URL'}
               </label>
               <input
+                key="template-cloud-run-url"
                 type="url"
                 id="cloudRunUrl"
                 name="cloudRunUrl"
@@ -449,6 +466,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 onChange={handleChange}
                 className={inputClass}
                 placeholder="https://...run.app"
+                autoComplete="off"
               />
             </div>
           </div>
@@ -459,6 +477,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               {theme === 'sea' ? '04_Artifact_Context' : theme === 'forest' ? 'The Roots (README)' : '04_Context'}
             </label>
             <textarea
+              key="template-summary"
               id="summary"
               name="summary"
               value={formData.summary}
@@ -467,6 +486,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
               rows={4}
               className={`${inputClass} resize-none ${fetchSuccess ? 'ring-2 ring-brand ring-offset-2 ring-offset-black' : ''} transition-all duration-500`}
               placeholder="Paste README or project context here..."
+              autoComplete="off"
             />
           </div>
 

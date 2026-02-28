@@ -238,24 +238,39 @@ export default function PostPreview({ content, imageUrl, theme, apiKey, userProf
                           if (!title || title.length < 5) title = 'My GitHub Project Submission';
                           
                           let bodyMarkdown = content;
-                          
                           if (lines.length > 1 && content.trim().startsWith(firstLine)) {
                             bodyMarkdown = content.replace(firstLine, '').trim();
                           }
                           
                           let finalImageUrl = (imageUrl && imageUrl.startsWith('http')) ? imageUrl : undefined;
-
-                          if (imageUrl && imageUrl.startsWith('data:') && imgbbApiKey) {
-                             try {
-                               finalImageUrl = await uploadToImgBB(imgbbApiKey, imageUrl);
-                             } catch (uploadErr) {
-                               console.warn("ImgBB upload failed, proceeding without image", uploadErr);
-                             }
+                          
+                          if (imageUrl && imageUrl.startsWith('data:')) {
+                            if (imgbbApiKey) {
+                              try {
+                                finalImageUrl = await uploadToImgBB(imgbbApiKey, imageUrl);
+                              } catch (uploadErr) {
+                                console.error("ImgBB upload failed in component block:", uploadErr);
+                              }
+                            } else {
+                              console.warn("Base64 image found but ImgBB API key is missing. Skipping upload.");
+                            }
+                          } else if (imageUrl) {
+                            console.log("Using existing image URL:", imageUrl);
                           }
+
+                          const bodyWithImage = bodyMarkdown;
+                          
+                          const frontMatter = `---
+title: "${title.replace(/"/g, '\\"')}"
+published: false
+tags: github, opensource, productivity
+${finalImageUrl ? `cover_image: ${finalImageUrl}` : ''}
+---
+\n\n`;
 
                           await publishToDevTo(apiKey, {
                             title,
-                            body_markdown: bodyMarkdown,
+                            body_markdown: frontMatter + bodyWithImage,
                             published: false,
                             main_image: finalImageUrl,
                             tags: ['github', 'opensource', 'productivity']
@@ -263,6 +278,7 @@ export default function PostPreview({ content, imageUrl, theme, apiKey, userProf
                           
                           setPublishStatus('success');
                         } catch (err: any) {
+                          console.error('Publishing flow failed:', err);
                           setErrorMessage(err.message || 'Failed to publish');
                           setPublishStatus('error');
                         } finally {

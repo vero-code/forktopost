@@ -13,13 +13,15 @@ export async function uploadToImgBB(apiKey: string, base64Image: string): Promis
 
     if (!response.ok) {
       const errorData = await response.json();
+      console.error("ImgBB upload failed with status:", response.status, errorData);
       throw new Error(errorData.error?.message || "Failed to upload image to ImgBB");
     }
 
     const result = await response.json();
-    return result.data.url;
+    const url = result.data.url || result.data.display_url;
+    return url;
   } catch (error) {
-    console.error("ImgBB upload error:", error);
+    console.error("ImgBB upload catch error:", error);
     throw error;
   }
 }
