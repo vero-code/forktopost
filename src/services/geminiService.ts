@@ -121,6 +121,9 @@ IMPORTANT:
       text: textResponse.text || "Failed to generate content.",
     };
 
+    const creditFooter = "\n\n---\n\n*This post was generated with [ForkToPost](https://github.com/vero-code/forktopost) — transform your repositories into compelling stories.*";
+    result.text += creditFooter;
+
     if (data.generateImage) {
       let displayTitle = data.repoName;
       if (!displayTitle && data.projectLink) {
