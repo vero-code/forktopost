@@ -71,6 +71,7 @@ OUTPUT REQUIREMENTS:
 1. Generate a "Post Title" at the very top (Catchy title, NO "Post Title:" label).
 2. Fill out the template completely based on the repository data.
 3. Output ONLY the Markdown content.
+4. DO NOT include any AI-generated footers or credits (e.g., "Generated with Gemini").
 `
     : `
 You are a World-Class Developer Advocate and Technical Writer. Your goal is to help users generate a winning submission post for the DEV Weekend Challenge.
@@ -109,6 +110,7 @@ OUTPUT STRUCTURE (Follow the official template):
 IMPORTANT:
 - Output ONLY the Markdown content for the post.
 - Do not include any conversational filler before or after the post.
+- DO NOT include any AI signatures, credits, or "Generated with" footers.
 `;
 
   try {
