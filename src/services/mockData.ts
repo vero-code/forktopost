@@ -1,4 +1,3 @@
-
 export const MOCK_POST_CONTENT = `Bringing Transparency and Intelligence to the Agentic Internet
 
 This is a submission for the [DEV Weekend Challenge: Community](https://dev.to/challenges/weekend-2026-02-28)

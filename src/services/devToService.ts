@@ -1,4 +1,3 @@
-
 const DEV_TO_API_BASE = '/devto-api';
 
 export interface DevToArticle {

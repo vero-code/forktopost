@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SubmissionForm from './components/SubmissionForm';
 import PostPreview from './components/PostPreview';
 import { generateSubmissionPost, type SubmissionData } from './services/geminiService';
-import { Sparkles, Waves, Anchor, Lightbulb, Zap, Leaf, Flower, Wind, Monitor, Palette, Droplets, Trees } from 'lucide-react';
+import { Sparkles, Waves, Anchor, Lightbulb, Zap, Leaf, Flower, Wind, Monitor, Droplets, Trees } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MOCK_POST_CONTENT, MOCK_IMAGE_URL } from './services/mockData';
 import { getDevToUserProfile } from './services/devToService';

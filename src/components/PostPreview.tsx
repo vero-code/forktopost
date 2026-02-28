@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Copy, Check, ArrowLeft, Anchor, Sparkles, ScrollText, FileText, Zap, Monitor, Share2, Loader2, User, Globe, AlertCircle } from 'lucide-react';
+import { Check, Anchor, Sparkles, ScrollText, Zap, Monitor, Share2, Loader2, Globe, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { publishToDevTo, getDevToUserProfile } from '../services/devToService';
-import { useEffect } from 'react';
+import { publishToDevTo } from '../services/devToService';
 
 interface PostPreviewProps {
   content: string;
@@ -18,19 +17,12 @@ interface PostPreviewProps {
   onClosePublishModal: () => void;
 }
 
-export default function PostPreview({ content, imageUrl, onBack, theme, apiKey, userProfile, onApiKeyChange, showPublishModal, onClosePublishModal }: PostPreviewProps) {
-  const [copied, setCopied] = useState(false);
+export default function PostPreview({ content, imageUrl, theme, apiKey, userProfile, onApiKeyChange, showPublishModal, onClosePublishModal }: PostPreviewProps) {
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishStatus, setPublishStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   // Global API key state is handled in App.tsx
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const Icon = theme === 'sea' ? Anchor : theme === 'forest' ? ScrollText : theme === 'tech' ? Zap : Monitor;
 
