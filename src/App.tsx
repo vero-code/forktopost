@@ -334,32 +334,32 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: 1 }}
             className="inline-block mb-6"
           >
             <div className="relative">
               {theme === 'sea' ? <Waves className="h-20 w-20 text-biolume animate-pulse" /> :
-               theme === 'forest' ? <Leaf className="h-16 w-16 text-leaf animate-pulse" /> :
+               theme === 'forest' ? <Leaf className="h-16 w-16 text-forest-leaf animate-pulse" /> :
                theme === 'tech' ? <Zap className="h-16 w-16 text-[#FF5C00] animate-pulse" /> :
                <Monitor className="h-16 w-16 text-indigo-500 animate-pulse" />}
               
-              {theme === 'forest' && <Flower className="h-6 w-6 text-[#f4e4bc] absolute -top-2 -right-2" />}
+              {theme === 'forest' && <Flower className="h-6 w-6 text-pink-400 absolute -top-2 -right-2" />}
               {theme === 'sea' && <Zap className="h-8 w-8 text-cyan-300 absolute -top-2 -right-2 blur-[1px]" />}
             </div>
           </motion.div>
           
           <h1 className={`mb-4 ${
             theme === 'sea' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-display text-pearl drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' :
-            theme === 'forest' ? 'text-8xl font-serif text-[#f4e4bc] drop-shadow-lg' :
+            theme === 'forest' ? 'text-6xl font-serif font-bold tracking-tight text-parchment drop-shadow-lg italic' :
             theme === 'tech' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-mono text-white' :
             'text-7xl font-bold tracking-[0.2em] uppercase font-sans text-white'
           }`}>
-            Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-leaf' : theme === 'tech' ? 'text-[#FF5C00]' : 'text-indigo-500'}>To</span>Post
+            Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-forest-leaf' : theme === 'tech' ? 'text-[#FF5C00]' : 'text-indigo-500'}>To</span>Post
           </h1>
           
           <p className={`text-xl max-w-2xl mx-auto ${
             theme === 'sea' ? 'uppercase italic text-biolume/60 font-quicksand tracking-widest' :
-            theme === 'forest' ? 'text-[#f4e4bc]/90 font-serif italic' :
+            theme === 'forest' ? 'text-parchment/80 font-serif italic' :
             theme === 'tech' ? 'uppercase italic text-[#8B949E] font-mono' :
             'uppercase italic text-slate-400 font-sans'
           }`}>

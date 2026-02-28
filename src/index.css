@@ -9,6 +9,13 @@
   --font-body: "Libre Baskerville", serif;
   --font-display: "Cinzel", serif;
   --font-quicksand: "Quicksand", sans-serif;
+
+  /* Forest Theme Colors */
+  --color-forest-deep: #1a2f1a;
+  --color-forest-moss: #4a5d23;
+  --color-forest-leaf: #8da05e;
+  --color-parchment: #f4e4bc;
+  --color-gold-glow: #ffd700;
 }
 
 /* Base Variables */
