@@ -60,10 +60,10 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
             </p>
           </div>
         </div>
-        <div className="flex gap-4 w-full md:w-auto">
+        <div className="flex flex-wrap md:flex-nowrap gap-4 w-full md:w-auto">
           <button
             onClick={onBack}
-            className={`flex-1 md:flex-none flex items-center justify-center px-6 py-3 border uppercase tracking-widest transition-colors text-sm ${
+            className={`flex-1 md:flex-none flex items-center justify-center px-4 md:px-6 py-3 border uppercase tracking-wider md:tracking-widest transition-colors text-xs md:text-sm ${
               theme === 'sea' ? 'border-biolume/20 hover:bg-biolume/5 font-display text-biolume' :
               theme === 'forest' ? 'border-[#8b4513]/20 hover:bg-[#8b4513]/5 font-serif italic text-[#4a3728]' :
               theme === 'tech' ? 'border-[#2D3139] hover:bg-white/5 font-mono text-[#8B949E]' :
@@ -75,7 +75,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
           </button>
           <button
             onClick={handleCopy}
-            className={`flex-1 md:flex-none flex items-center justify-center px-8 py-3 font-bold uppercase tracking-[0.2em] transition-all text-sm ${
+            className={`flex-1 md:flex-none flex items-center justify-center px-4 md:px-8 py-3 font-bold uppercase tracking-wider md:tracking-[0.2em] transition-all text-xs md:text-sm ${
               copied
                 ? 'bg-emerald-500 text-slate-900 shadow-lg'
                 : theme === 'sea' ? 'pearl-button' :
@@ -92,7 +92,7 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
             ) : (
               <>
                 <Copy className="h-4 w-4 mr-2" />
-                {theme === 'sea' ? 'EXTRACT_DATA' : theme === 'forest' ? 'Gather the Words' : 'Copy_Markdown'}
+                {theme === 'sea' ? 'EXTRACT' : theme === 'forest' ? 'Gather the Words' : 'Copy_Markdown'}
               </>
             )}
           </button>

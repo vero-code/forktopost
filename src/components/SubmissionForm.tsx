@@ -407,7 +407,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
         <button
           type="submit"
           disabled={isLoading}
-          className={`md:w-2/3 font-bold py-5 px-8 uppercase tracking-[0.2em] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 text-lg ${
+          className={`md:w-2/3 font-bold py-4 md:py-5 px-4 md:px-8 uppercase tracking-wider md:tracking-[0.2em] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 text-base md:text-lg ${
             theme === 'sea' ? 'pearl-button rounded-none font-display' :
             theme === 'forest' ? 'golden-seed rounded-full font-serif text-[#4a3728]' :
             theme === 'tech' ? 'bg-[#FF5C00] hover:bg-[#FF7A33] text-black font-mono' :
