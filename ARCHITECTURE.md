@@ -25,6 +25,12 @@ graph TD
 
     Result[GenerationResult] --> Preview[PostPreview]
     Preview -->|Stable Layout| Sidebar[Action Sidebar]
+    
+    subgraph Image Hosting
+        Preview -->|If ImgBB Key| ImgBB[ImgBB Service]
+        ImgBB -->|Public URL| DevTo
+    end
+    
     Sidebar -->|Publish Draft| DevTo[DEV.to Service]
     Sidebar -->|Copy| Clipboard([Clipboard])
     
@@ -62,6 +68,7 @@ graph TD
 - Renders Markdown via `react-markdown` with GFM support.
 - Displays generated cover images with themed metadata overlays.
 - **Integrated Actions**: Hosts the "Copy" and "Publish" triggers in a dedicated sidebar to maintain layout stability.
+- **Image Handling**: Detects if an image is a local data URI or a URL. If a data URI is present and an ImgBB key is provided, it automatically uploads the image before drafting on DEV.to.
 - **DEV.to Bridge**: Handles the API key input, fetches real-time **user profile data** (avatar/username) for verification, and prepares metadata for direct publishing.
 
 ## 🎨 Theming System
@@ -76,6 +83,7 @@ The system leverages CSS Variables and the `data-theme` attribute for real-time 
 ### 5. `Services/API` (External Bridges)
 - **GitHubService**: Automated retrieval of repository metadata and README data for zero-effort form filling.
 - **DevToService**: Integration with DEV.to API via Vite proxy for profile verification and article drafting.
+- **ImgBBService**: Converts AI-generated base64 images into public URLs via a secure API gateway.
 - **GeminiService**: Central gateway for multimodal AI generation (Text Narrative + Visual Metaphor).
 
 ## 🛠️ Tech Stack Decisions

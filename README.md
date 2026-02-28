@@ -1,6 +1,6 @@
 # 🔱 ForkToPost
 
-![Version](https://img.shields.io/badge/version-v1.0.0-blue)
+![Version](https://img.shields.io/badge/version-v1.1.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -19,6 +19,7 @@ Whether you're struggling to articulate your value proposition or just want to c
 - 🤖 **AI-Powered Narrative**: Leverages `gemini-3-flash-preview` to analyze your repository and generate structured Markdown.
 - 🔗 **GitHub Integration**: Automatically fetch project names and README content by pasting a GitHub URL.
 - 🎨 **Image Generation**: Create cinematic visual metaphors for your projects using `gemini-3.1-flash-image-preview`.
+- 🖼️ **Image Hosting**: Automatically upload AI-generated images to **ImgBB** to ensure they appear as cover images on DEV.to.
 - 🚀 **Direct Publish**: Publish your generated post directly as a **draft to DEV.to** with one click.
 - 👤 **Profile Verification**: Enter your API key to instantly see your DEV.to avatar and username, ensuring a secure and correct connection.
 - 🧠 **Advanced Writing Toggles**:
@@ -45,6 +46,7 @@ Whether you're struggling to articulate your value proposition or just want to c
 - **AI**: [@google/genai](https://www.npmjs.com/package/@google/genai)
   - **Text**: `gemini-3-flash-preview`
   - **Vision/Image**: `gemini-3.1-flash-image-preview`
+- **Image Hosting**: [ImgBB API](https://api.imgbb.com/)
 - **Animations**: [Motion](https://motion.dev/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 
@@ -63,6 +65,7 @@ For a detailed deep-dive into the system design, data flow, and component breakd
 - [Node.js](https://nodejs.org/) (v18+)
 - A Google AI (Gemini) API Key. Get one at [Google AI Studio](https://aistudio.google.com/).
 - A DEV.to API Key (Optional, for direct publishing). Get one at [dev.to Settings > Extensions](https://dev.to/settings/extensions).
+- An ImgBB API Key (Optional, for auto-uploading AI images). Get one at [api.imgbb.com](https://api.imgbb.com/).
 
 ### Installation
 
