@@ -4,6 +4,7 @@ import PostPreview from './components/PostPreview';
 import { generateSubmissionPost, type SubmissionData } from './services/geminiService';
 import { Sparkles, Waves, Anchor, Lightbulb, Zap, Leaf, Flower, Wind, Monitor, Palette, Droplets, Trees } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { MOCK_POST_CONTENT, MOCK_IMAGE_URL } from './services/mockData';
 
 type Theme = 'original' | 'tech' | 'forest' | 'sea';
 
@@ -60,6 +61,11 @@ export default function App() {
     setGeneratedImage(null);
   };
 
+  const handleTestPreview = () => {
+    setGeneratedPost(MOCK_POST_CONTENT);
+    setGeneratedImage(MOCK_IMAGE_URL);
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden theme-bg">
       {theme === 'sea' && <div className="water-caustics" />}
@@ -108,6 +114,14 @@ export default function App() {
           title="Sea"
         >
           <Droplets className="h-4 w-4" />
+        </button>
+        <div className="w-px h-4 bg-white/10 mx-1" />
+        <button 
+          onClick={handleTestPreview}
+          className="p-2 rounded-full text-white/40 hover:text-indigo-400 transition-all"
+          title="Load Test Post"
+        >
+          <Sparkles className="h-4 w-4" />
         </button>
       </div>
 
