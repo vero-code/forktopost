@@ -23,6 +23,13 @@
   --color-biolume: #22d3ee;
   --color-teal-glow: #0d9488;
   --color-pearl: #f8fafc;
+
+  /* Tech Theme Colors */
+  --color-tech-brand: #FF5C00;
+  --color-tech-surface: #0F1115;
+  --color-tech-border: #2D3139;
+  --color-tech-muted: #8B949E;
+  --color-tech-text: #E1E4E8;
 }
 
 /* Base Variables */

@@ -341,7 +341,7 @@ export default function App() {
             <div className="relative">
               {theme === 'sea' ? <Waves className="h-20 w-20 text-biolume animate-pulse" /> :
                theme === 'forest' ? <Leaf className="h-16 w-16 text-forest-leaf animate-pulse" /> :
-               theme === 'tech' ? <Zap className="h-16 w-16 text-[#FF5C00] animate-pulse" /> :
+               theme === 'tech' ? <Zap className="h-16 w-16 text-tech-brand animate-pulse" /> :
                <Monitor className="h-16 w-16 text-indigo-500 animate-pulse" />}
               
               {theme === 'forest' && <Flower className="h-6 w-6 text-pink-400 absolute -top-2 -right-2" />}
@@ -352,16 +352,16 @@ export default function App() {
           <h1 className={`mb-4 ${
             theme === 'sea' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-display text-pearl drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]' :
             theme === 'forest' ? 'text-6xl font-serif font-bold tracking-tight text-parchment drop-shadow-lg italic' :
-            theme === 'tech' ? 'text-7xl font-bold tracking-[0.2em] uppercase font-mono text-white' :
+            theme === 'tech' ? 'text-5xl font-black tracking-tighter italic font-sans text-white uppercase' :
             'text-7xl font-bold tracking-[0.2em] uppercase font-sans text-white'
           }`}>
-            Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-forest-leaf' : theme === 'tech' ? 'text-[#FF5C00]' : 'text-indigo-500'}>To</span>Post
+            Fork<span className={theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-forest-leaf' : theme === 'tech' ? 'text-tech-brand' : 'text-indigo-500'}>To</span>Post
           </h1>
           
           <p className={`text-xl max-w-2xl mx-auto ${
             theme === 'sea' ? 'uppercase italic text-biolume/60 font-quicksand tracking-widest' :
             theme === 'forest' ? 'text-parchment/80 font-serif italic' :
-            theme === 'tech' ? 'uppercase italic text-[#8B949E] font-mono' :
+            theme === 'tech' ? 'font-mono text-sm text-tech-muted' :
             'uppercase italic text-slate-400 font-sans'
           }`}>
             {theme === 'sea' ? 'Deep-sea technical alchemy. Transform your code in the bioluminescent abyss.' :
@@ -381,7 +381,7 @@ export default function App() {
                 className={`px-6 py-4 mb-8 backdrop-blur-md border ${
                   theme === 'sea' ? 'bg-cyan-950/30 border-cyan-500/50 text-cyan-100 font-display tracking-widest text-sm' :
                   theme === 'forest' ? 'bg-red-900/30 border-red-500/50 text-red-100 font-serif italic' :
-                  'bg-red-500/10 border-red-500/50 text-red-500 font-mono text-xs'
+                  'bg-red-900/10 border-red-500/50 text-red-400 font-mono text-xs'
                 }`}
               >
                 {theme === 'sea' ? <Anchor className="h-5 w-5 mr-3 inline" /> :
@@ -420,16 +420,16 @@ export default function App() {
                 className={`p-8 md:p-12 ${
                   theme === 'sea' ? 'stone-slab border-t-4 border-biolume' :
                   theme === 'forest' ? 'parchment-card' :
-                  theme === 'tech' ? 'bg-[#0F1115] border border-[#2D3139]' :
+                  theme === 'tech' ? 'bg-[#161B22] border border-tech-border' :
                   'bg-slate-800/50 border border-slate-700 rounded-2xl'
                 }`}
               >
                 <div className={`flex items-center gap-3 mb-10 border-b pb-6 ${
                   theme === 'sea' ? 'border-biolume/20' :
                   theme === 'forest' ? 'border-[#8b4513]/20' :
-                  'border-white/10'
+                  'border-tech-border'
                 }`}>
-                  <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-brand'}`} />
+                  <Sparkles className={`h-6 w-6 ${theme === 'sea' ? 'text-biolume' : theme === 'forest' ? 'text-[#4a5d23]' : 'text-tech-brand'}`} />
                   <h2 className={`text-2xl font-bold ${
                     theme === 'sea' ? 'font-display text-pearl tracking-[0.15em] uppercase' :
                     theme === 'forest' ? 'font-serif text-[#4a3728] italic' :

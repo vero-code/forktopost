@@ -134,12 +134,12 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
 
   const inputClass = theme === 'sea' ? "w-full bg-cyan-950/20 border-b border-biolume/30 focus:border-biolume focus:ring-0 font-display text-lg tracking-[0.1em] text-biolume placeholder-biolume/20 py-3 transition-all duration-500" :
                     theme === 'forest' ? "w-full bg-transparent border-b-2 border-[#8b4513]/20 focus:border-[#4a5d23] focus:ring-0 font-serif text-lg italic text-[#4a3728] placeholder-[#8b7355]/50 py-2 transition-colors" :
-                    theme === 'tech' ? "w-full bg-black/20 border border-[#2D3139] focus:border-[#FF5C00] focus:ring-0 font-mono text-sm text-white placeholder-[#8B949E]/30 p-3 transition-all" :
+                    theme === 'tech' ? "w-full bg-[#161B22] border border-tech-border focus:border-tech-brand focus:ring-0 font-mono text-sm text-white placeholder-tech-muted/30 p-4 transition-all rounded-none" :
                     "w-full bg-slate-900/50 border border-slate-700 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 font-sans text-white placeholder-slate-500 p-3 transition-all";
 
   const labelClass = theme === 'sea' ? "flex items-center gap-2 font-display text-[10px] font-bold text-teal-glow uppercase tracking-[0.25em] mb-1" :
                     theme === 'forest' ? "flex items-center gap-2 font-serif text-sm font-bold text-[#4a5d23] uppercase tracking-widest mb-1 italic" :
-                    theme === 'tech' ? "flex items-center gap-2 font-mono text-[10px] font-bold text-[#FF5C00] uppercase tracking-widest mb-1" :
+                    theme === 'tech' ? "flex items-center gap-2 font-mono text-[10px] font-bold text-tech-brand uppercase tracking-widest mb-1" :
                     "flex items-center gap-2 font-sans text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1";
 
   const Icon = theme === 'sea' ? Anchor : theme === 'forest' ? Scroll : theme === 'tech' ? Zap : Monitor;
@@ -151,12 +151,22 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
         <button
           type="button"
           onClick={() => setFormData(p => ({ ...p, mode: 'custom' }))}
-          className={`px-6 py-2.5 rounded-md font-bold transition-all tracking-widest ${
-            theme === 'forest' ? 'font-serif italic text-lg' : 'text-xs uppercase'
+          className={`px-6 py-2.5 transition-all tracking-widest font-bold ${
+            theme === 'forest' ? 'font-serif italic text-lg rounded-md' : 
+            theme === 'tech' ? 'font-mono text-xs rounded-none border' : 
+            'text-xs uppercase rounded-md'
           } ${
             formData.mode === 'custom' 
-              ? (theme === 'sea' ? 'bg-biolume text-black' : theme === 'forest' ? 'bg-[#4a5d23] text-white' : 'bg-brand text-white')
-              : 'text-muted hover:text-white'
+              ? (
+                  theme === 'sea' ? 'bg-biolume text-black border-transparent' : 
+                  theme === 'forest' ? 'bg-[#4a5d23] text-white border-transparent' : 
+                  theme === 'tech' ? 'bg-tech-brand text-black border-tech-brand shadow-[0_0_15px_rgba(255,92,0,0.3)]' : 
+                  'bg-brand text-white border-transparent'
+                )
+              : (
+                  theme === 'tech' ? 'text-tech-muted hover:text-white border-tech-border hover:border-tech-brand/50 bg-transparent' : 
+                  'text-muted hover:text-white border-transparent'
+                )
           }`}
         >
           {theme === 'forest' ? 'Seeds of Creation' : 'Custom_Fields'}
@@ -164,12 +174,22 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
         <button
           type="button"
           onClick={() => setFormData(p => ({ ...p, mode: 'template' }))}
-          className={`px-6 py-2.5 rounded-md font-bold transition-all tracking-widest ${
-            theme === 'forest' ? 'font-serif italic text-lg' : 'text-xs uppercase'
+          className={`px-6 py-2.5 transition-all tracking-widest font-bold ${
+            theme === 'forest' ? 'font-serif italic text-lg rounded-md' : 
+            theme === 'tech' ? 'font-mono text-xs rounded-none border' : 
+            'text-xs uppercase rounded-md'
           } ${
             formData.mode === 'template' 
-              ? (theme === 'sea' ? 'bg-biolume text-black' : theme === 'forest' ? 'bg-[#4a5d23] text-white' : 'bg-brand text-white')
-              : 'text-muted hover:text-white'
+              ? (
+                  theme === 'sea' ? 'bg-biolume text-black border-transparent' : 
+                  theme === 'forest' ? 'bg-[#4a5d23] text-white border-transparent' : 
+                  theme === 'tech' ? 'bg-tech-brand text-black border-tech-brand shadow-[0_0_15px_rgba(255,92,0,0.3)]' : 
+                  'bg-brand text-white border-transparent'
+                )
+              : (
+                  theme === 'tech' ? 'text-tech-muted hover:text-white border-tech-border hover:border-tech-brand/50 bg-transparent' : 
+                  'text-muted hover:text-white border-transparent'
+                )
           }`}
         >
           {theme === 'forest' ? 'Ancient Scrolls' : 'Template_Mode'}
@@ -544,7 +564,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
           className={`md:w-2/3 font-bold py-4 md:py-5 px-4 md:px-8 uppercase tracking-wider md:tracking-[0.2em] transition-all disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed flex items-center justify-center gap-4 text-base md:text-lg relative overflow-hidden group ${
             theme === 'sea' ? 'pearl-button rounded-none font-display' :
             theme === 'forest' ? 'golden-seed rounded-full font-serif text-[#4a3728]' :
-            theme === 'tech' ? 'bg-[#FF5C00] hover:bg-[#FF7A33] text-black font-mono' :
+            theme === 'tech' ? 'bg-tech-brand hover:bg-[#FF7A33] text-black font-mono rounded-none' :
             'bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-sans'
           }`}
         >
