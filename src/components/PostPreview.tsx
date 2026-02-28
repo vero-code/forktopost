@@ -217,15 +217,25 @@ export default function PostPreview({ content, imageUrl, onBack, theme }: PostPr
                         setIsPublishing(true);
                         setErrorMessage('');
                         try {
-                          // 1. Try to find a title in the content
                           const lines = content.split('\n');
-                          let title = lines[0].replace(/[#*]/g, '').trim();
+                          let firstLine = lines[0].trim();
+                          
+                          let title = firstLine
+                            .replace(/^Post Title:\s*/i, '')
+                            .replace(/^Title:\s*/i, '')
+                            .replace(/[#*`]/g, '')
+                            .trim();
+
                           if (!title || title.length < 5) title = 'My GitHub Project Submission';
                           
-                          // 2. Publish
+                          let bodyMarkdown = content;
+                          if (lines.length > 1) {
+                            bodyMarkdown = lines.slice(1).join('\n').trim();
+                          }
+                          
                           await publishToDevTo(apiKey, {
                             title,
-                            body_markdown: content,
+                            body_markdown: bodyMarkdown,
                             published: false,
                             main_image: imageUrl,
                             tags: ['github', 'opensource', 'productivity']

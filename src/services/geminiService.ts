@@ -68,7 +68,7 @@ ${architectureInstruction}
 - Clear, energetic, and encouraging.
 
 OUTPUT REQUIREMENTS:
-1. Generate a "Post Title" at the very top.
+1. Generate a "Post Title" at the very top (Catchy title, NO "Post Title:" label).
 2. Fill out the template completely based on the repository data.
 3. Output ONLY the Markdown content.
 `
@@ -99,7 +99,7 @@ ${architectureInstruction}
 - Clear, energetic, and encouraging.
 
 OUTPUT STRUCTURE (Follow the official template):
-1. Catchy Title (with community focus)
+1. Catchy Title (with community focus - NO "Post Title:" label)
 2. The Community Section (Defining the 'Who' and 'Why')
 3. What I Built (The 'What' and 'How')
 4. Why It Matters (The 'Impact')
