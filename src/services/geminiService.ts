@@ -22,6 +22,7 @@ export interface SubmissionData {
   cloudRunUrl?: string;
   generateImage?: boolean;
   addEmpathy?: boolean;
+  includeArchitecture?: boolean;
 }
 
 export interface GenerationResult {
@@ -35,6 +36,10 @@ export async function generateSubmissionPost(data: SubmissionData): Promise<Gene
   const empathyInstruction = data.addEmpathy 
     ? "TONE OVERRIDE: Write with deep empathy and emotional resonance. Focus on the human struggle, the 'aha!' moment, and the heartfelt desire to help the community. Use sensory language and share personal vulnerability."
     : "TONE: Professional yet witty (typical for DEV.to).";
+
+  const architectureInstruction = data.includeArchitecture
+    ? "ARCHITECTURE SECTION: Include a detailed technical architecture section. Explain the data flow, component structure, and how different parts of the tech stack interact. Use a clear, structured format (e.g., Mermaid-like descriptions or structured lists)."
+    : "";
 
   const prompt = isTemplateMode 
     ? `
@@ -56,6 +61,7 @@ If a YouTube Video or Cloud Run URL is provided, ensure they are wrapped in Liqu
 For example, if YouTube is "https://youtu.be/123", it should appear as {% embed https://youtu.be/123 %}.
 
 ${empathyInstruction}
+${architectureInstruction}
 - Use "I" (first person)
 - Bold key phrases
 - Scannable sections
@@ -86,6 +92,7 @@ INPUT DATA:
 - Problem Solved: ${data.problemSolved}
 
 ${empathyInstruction}
+${architectureInstruction}
 - Use "I" (first person)
 - Bold key phrases
 - Scannable sections (bullet points, horizontal rules)
@@ -96,7 +103,7 @@ OUTPUT STRUCTURE (Follow the official template):
 2. The Community Section (Defining the 'Who' and 'Why')
 3. What I Built (The 'What' and 'How')
 4. Why It Matters (The 'Impact')
-5. Tech Deep Dive (Specific Gemini role/API usage)
+5. Architecture & Tech Deep Dive (Specific Gemini role/API usage and system structure)
 6. Link to the project & Demo
 
 IMPORTANT:

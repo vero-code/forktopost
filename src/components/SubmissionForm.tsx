@@ -44,6 +44,7 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
     cloudRunUrl: '',
     generateImage: false,
     addEmpathy: false,
+    includeArchitecture: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -350,6 +351,30 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
                 'font-sans text-slate-300'
               }`}>
                 {theme === 'sea' ? 'INFUSE_EMOTIONAL_RESONANCE' : theme === 'forest' ? 'Add a Heartbeat' : 'Add_Empathy_to_Story'}
+              </label>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="includeArchitecture"
+                name="includeArchitecture"
+                checked={formData.includeArchitecture}
+                onChange={handleChange}
+                className={`h-5 w-5 rounded transition-all ${
+                  theme === 'sea' ? 'bg-cyan-950 border-biolume text-biolume focus:ring-biolume' :
+                  theme === 'forest' ? 'bg-[#fff9e6] border-[#8b4513] text-[#4a5d23] focus:ring-[#4a5d23]' :
+                  theme === 'tech' ? 'bg-black border-[#2D3139] text-[#FF5C00] focus:ring-[#FF5C00]' :
+                  'bg-slate-900 border-slate-700 text-indigo-500 focus:ring-indigo-500'
+                }`}
+              />
+              <label htmlFor="includeArchitecture" className={`text-sm font-bold uppercase tracking-widest ${
+                theme === 'sea' ? 'font-display text-biolume' :
+                theme === 'forest' ? 'font-serif text-[#4a5d23] italic' :
+                theme === 'tech' ? 'font-mono text-[#FF5C00]' :
+                'font-sans text-slate-300'
+              }`}>
+                {theme === 'sea' ? 'REVEAL_SYSTEM_BLUEPRINT' : theme === 'forest' ? 'Sketch the Blueprint' : 'Include_Architecture'}
               </label>
             </div>
           </div>
