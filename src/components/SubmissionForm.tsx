@@ -132,9 +132,9 @@ export default function SubmissionForm({ onSubmit, isLoading, theme }: Submissio
     onSubmit(formData);
   };
 
-  const inputClass = theme === 'sea' ? "w-full bg-cyan-950/20 border-b border-biolume/30 focus:border-biolume focus:ring-0 font-display text-lg tracking-[0.1em] text-biolume placeholder-biolume/20 py-3 transition-all duration-500" :
-                    theme === 'forest' ? "w-full bg-transparent border-b-2 border-[#8b4513]/20 focus:border-[#4a5d23] focus:ring-0 font-serif text-lg italic text-[#4a3728] placeholder-[#8b7355]/50 py-2 transition-colors" :
-                    theme === 'tech' ? "w-full bg-[#161B22] border border-tech-border focus:border-tech-brand focus:ring-0 font-mono text-sm text-white placeholder-tech-muted/30 p-4 transition-all rounded-none" :
+  const inputClass = theme === 'sea' ? "w-full bg-cyan-950/20 border-b border-biolume/30 focus:border-biolume focus:ring-0 font-display text-lg tracking-[0.1em] text-biolume placeholder-biolume/50 py-3 transition-all duration-500" :
+                    theme === 'forest' ? "w-full bg-transparent border-b-2 border-[#8b4513]/20 focus:border-[#4a5d23] focus:ring-0 font-serif text-lg italic text-[#4a3728] placeholder-[#8b7355]/80 py-2 transition-colors" :
+                    theme === 'tech' ? "w-full bg-[#161B22] border border-tech-border focus:border-tech-brand focus:ring-0 font-mono text-sm text-white placeholder-tech-muted/60 p-4 transition-all rounded-none" :
                     "w-full bg-gray-900/50 border border-gray-700 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 font-sans text-white placeholder-gray-500 p-3 transition-all";
 
   const labelClass = theme === 'sea' ? "flex items-center gap-2 font-display text-[10px] font-bold text-teal-glow uppercase tracking-[0.25em] mb-1" :
