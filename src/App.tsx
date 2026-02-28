@@ -27,6 +27,7 @@ export default function App() {
   const [devToError, setDevToError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [showPublishModal, setShowPublishModal] = useState(false);
+  const [imgbbApiKey, setImgbbApiKey] = useState(() => localStorage.getItem('imgbb-api-key') || '');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -246,6 +247,34 @@ export default function App() {
                   </p>
                 </div>
 
+                <div>
+                  <label className={`block text-[10px] uppercase tracking-widest mb-2 ${
+                    theme === 'sea' ? 'font-display text-biolume' :
+                    theme === 'forest' ? 'font-serif text-[#4a5d23]' :
+                    'text-muted font-mono'
+                  }`}>
+                    ImgBB API Key (for AI Images)
+                  </label>
+                  <input
+                    type="password"
+                    value={imgbbApiKey}
+                    onChange={(e) => {
+                      setImgbbApiKey(e.target.value);
+                      localStorage.setItem('imgbb-api-key', e.target.value);
+                    }}
+                    placeholder="..."
+                    className={`w-full p-3 bg-black/20 border transition-all text-sm ${
+                      theme === 'sea' ? 'border-biolume/20 focus:border-biolume font-display text-biolume uppercase tracking-widest' :
+                      theme === 'forest' ? 'border-[#8b4513]/20 focus:border-[#4a5d23] font-serif italic' :
+                      theme === 'tech' ? 'border-[#2D3139] focus:border-[#FF5C00] font-mono text-white' :
+                      'border-slate-700 focus:border-indigo-500 rounded-lg text-white'
+                    }`}
+                  />
+                  <p className="mt-2 text-[10px] text-muted italic">
+                    Get your free key at <a href="https://api.imgbb.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">api.imgbb.com</a>
+                  </p>
+                </div>
+
                 {devToError && (
                   <motion.div 
                     initial={{ opacity: 0, height: 0 }}
@@ -427,8 +456,13 @@ export default function App() {
                         setDevToApiKey(key);
                         localStorage.setItem('devto-api-key', key);
                       }}
+                      onImgbbApiKeyChange={(key) => {
+                        setImgbbApiKey(key);
+                        localStorage.setItem('imgbb-api-key', key);
+                      }}
                       showPublishModal={showPublishModal}
                       onClosePublishModal={() => setShowPublishModal(false)}
+                      imgbbApiKey={imgbbApiKey}
                     />
                   </motion.div>
                 ) : (

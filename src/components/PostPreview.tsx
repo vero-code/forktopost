@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import { Check, Anchor, Sparkles, ScrollText, Zap, Monitor, Share2, Loader2, Globe, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { publishToDevTo } from '../services/devToService';
+import { uploadToImgBB } from '../services/imgbbService';
 
 interface PostPreviewProps {
   content: string;
@@ -13,11 +14,13 @@ interface PostPreviewProps {
   apiKey: string;
   userProfile: any;
   onApiKeyChange: (key: string) => void;
+  imgbbApiKey: string;
+  onImgbbApiKeyChange: (key: string) => void;
   showPublishModal: boolean;
   onClosePublishModal: () => void;
 }
 
-export default function PostPreview({ content, imageUrl, theme, apiKey, userProfile, onApiKeyChange, showPublishModal, onClosePublishModal }: PostPreviewProps) {
+export default function PostPreview({ content, imageUrl, theme, apiKey, userProfile, onApiKeyChange, imgbbApiKey, onImgbbApiKeyChange, showPublishModal, onClosePublishModal }: PostPreviewProps) {
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishStatus, setPublishStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -171,6 +174,33 @@ export default function PostPreview({ content, imageUrl, theme, apiKey, userProf
                     </div>
                   </div>
 
+                  <div>
+                    <label className={`block text-[10px] uppercase tracking-widest mb-2 ${
+                      theme === 'sea' ? 'font-display text-biolume' :
+                      theme === 'forest' ? 'font-serif text-[#4a5d23]' :
+                      'text-muted font-mono'
+                    }`}>
+                      ImgBB API Key (for Images)
+                    </label>
+                    <input
+                      type="password"
+                      value={imgbbApiKey}
+                      onChange={(e) => {
+                        onImgbbApiKeyChange(e.target.value);
+                      }}
+                      placeholder="..."
+                      className={`w-full p-3 bg-black/20 border transition-all text-sm ${
+                        theme === 'sea' ? 'border-biolume/20 focus:border-biolume font-display text-biolume' :
+                        theme === 'forest' ? 'border-[#8b4513]/20 focus:border-[#4a5d23] font-serif italic' :
+                        theme === 'tech' ? 'border-[#2D3139] focus:border-[#FF5C00] font-mono text-white' :
+                        'border-slate-700 focus:border-indigo-500 rounded-lg text-white'
+                      }`}
+                    />
+                    <p className="text-[10px] text-muted italic mt-1">
+                      Enables auto-upload of AI images
+                    </p>
+                  </div>
+
                   {errorMessage && (
                     <div className="flex items-start gap-2 text-xs text-red-500 bg-red-500/10 p-3 rounded border border-red-500/20">
                       <AlertCircle className="h-4 w-4 shrink-0" />
@@ -196,8 +226,8 @@ export default function PostPreview({ content, imageUrl, theme, apiKey, userProf
                         setIsPublishing(true);
                         setErrorMessage('');
                         try {
-                          const lines = content.split('\n');
-                          let firstLine = lines[0].trim();
+                          const lines = content.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                          let firstLine = lines.length > 0 ? lines[0] : '';
                           
                           let title = firstLine
                             .replace(/^Post Title:\s*/i, '')
@@ -208,15 +238,26 @@ export default function PostPreview({ content, imageUrl, theme, apiKey, userProf
                           if (!title || title.length < 5) title = 'My GitHub Project Submission';
                           
                           let bodyMarkdown = content;
-                          if (lines.length > 1) {
-                            bodyMarkdown = lines.slice(1).join('\n').trim();
+                          
+                          if (lines.length > 1 && content.trim().startsWith(firstLine)) {
+                            bodyMarkdown = content.replace(firstLine, '').trim();
                           }
                           
+                          let finalImageUrl = (imageUrl && imageUrl.startsWith('http')) ? imageUrl : undefined;
+
+                          if (imageUrl && imageUrl.startsWith('data:') && imgbbApiKey) {
+                             try {
+                               finalImageUrl = await uploadToImgBB(imgbbApiKey, imageUrl);
+                             } catch (uploadErr) {
+                               console.warn("ImgBB upload failed, proceeding without image", uploadErr);
+                             }
+                          }
+
                           await publishToDevTo(apiKey, {
                             title,
                             body_markdown: bodyMarkdown,
                             published: false,
-                            main_image: imageUrl,
+                            main_image: finalImageUrl,
                             tags: ['github', 'opensource', 'productivity']
                           });
                           
