@@ -6,9 +6,19 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 ![Gemini AI](https://img.shields.io/badge/Gemini_AI-Google-4285F4?logo=google-gemini&logoColor=white)
 
-**ForkToPost** is the ultimate submission generator for the **DEV Weekend Challenge: Community**. It helps you transform your GitHub repository into a compelling story that captures the attention of the DEV.to community.
+**ForkToPost** is the ultimate submission generator for the [**DEV Weekend Challenge: Community**](https://dev.to/vero-code/from-code-to-connection-automating-the-story-of-our-craft-with-forktopost-3bla). It helps you transform your GitHub repository into a compelling story that captures the attention of the DEV.to community.
 
 Whether you're struggling to articulate your value proposition or just want to craft a professional, witty, and scannable post, ForkToPost uses Google's **Gemini AI** to weave your code into a winning narrative.
+
+![ForkToPost cinematic story example](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/y6ewghwawujq8fdmkj64.png)
+
+---
+
+## 📺 Demo Video
+
+Click to watch **ForkToPost** in action:
+
+[![ForkToPost Demo Video](https://img.youtube.com/vi/ZlfC-FDkHB4/0.jpg)](https://youtu.be/ZlfC-FDkHB4)
 
 ---
 
@@ -17,11 +27,14 @@ Whether you're struggling to articulate your value proposition or just want to c
 ⚡ Built for the Weekend: Designed specifically to help DEV Challenge participants meet tight deadlines without sacrificing quality.
 
 - 🤖 **AI-Powered Narrative**: Leverages `gemini-3-flash-preview` to analyze your repository and generate structured Markdown.
+  <br>![Gemini AI narrative generation interface](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/aihc0zbp2fx2rw57ibzh.png)
 - 🔗 **GitHub Integration**: Automatically fetch project names and README content by pasting a GitHub URL.
 - 🎨 **Image Generation**: Create cinematic visual metaphors for your projects using `gemini-3.1-flash-image-preview`.
 - 🖼️ **Image Hosting**: Automatically upload AI-generated images to **ImgBB** to ensure they appear as cover images on DEV.to.
 - 🚀 **Direct Publish**: Publish your generated post directly as a **draft to DEV.to** with one click.
+  <br>![Direct draft delivery to DEV.to dashboard](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w5p0l0x96454z68zfqh0.png)
 - 👤 **Profile Verification**: Enter your API key to instantly see your DEV.to avatar and username, ensuring a secure and correct connection.
+  <br>![DEV.to API profile synchronization](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/eljgi53x03hf7ivus6ts.png)
 - 🧠 **Advanced Writing Toggles**:
   - **Add Empathy**: Infuse your post with emotional resonance, focusing on the human struggle and the "aha!" moment.
   - **Architecture Deep-Dive**: Automatically generate a structured technical breakdown of your system.
@@ -32,6 +45,7 @@ Whether you're struggling to articulate your value proposition or just want to c
   - 💻 **Original (Modern)**: A clean, standard professional interface.
 - 📝 **Dual Modes**:
   - **Custom Fields**: Tailor every detail from target community to specific problems solved.
+    <br>![Customizing AI parameters in ForkToPost](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xpw39kx0ip6hq6iz9j2s.png)
   - **Template Mode**: Paste a standard template and let the AI fill in the blanks. Supports automatic YouTube and Cloud Run embeds using Liquid tags (`{% embed %}`).
 - 📋 **Stable Workspace**: A side-by-side layout that keeps your post preview centered while providing tools (copy, publish, etc.) in a stable right sidebar.
 - 📋 **One-Click Copy**: Instantly copy your generated post and preview with a single click.
@@ -55,6 +69,8 @@ Whether you're struggling to articulate your value proposition or just want to c
 ## 🏗️ Architecture
 
 For a detailed deep-dive into the system design, data flow, and component breakdown, please refer to our [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+![ForkToPost system architecture blueprint](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/46gciyxw70n29bvaau95.png)
 
 ---
 
@@ -109,6 +125,8 @@ The easiest way to deploy **ForkToPost** is via [Vercel](https://vercel.com/):
 ---
 
 ## 🎭 The Alchemy (Themes)
+
+![Original Modern UI](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gn49pm7xlbs34pxkgyad.png)
 
 | Theme | Aesthetic | Vibe |
 | :--- | :--- | :--- |
